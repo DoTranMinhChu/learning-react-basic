@@ -15,47 +15,47 @@ I . INSTALL ENVIRONMENTS
 II. Hello World with ReactJS
 
 # Create new React App (https://reactjs.org/docs/create-a-new-react-app.html)
-	* Open the folder where you want to create the project
-	* Open 'Command Prompt' or 'Git Bash' or 'Termial (in Visual Studio Code)' in this folder
-      * Type the following commands:
+* Open the folder where you want to create the project
+* Open 'Command Prompt' or 'Git Bash' or 'Termial (in Visual Studio Code)' in this folder
+* Type the following commands:
 		npx create-react-app react-basic
 		cd react-basic
 		npm start
-	 note : In it you can replace 'react-basic' with your project name ( npx create-react-app <project-name> )
-		: npm start -> Run
-      * Reopen your project ReactJS with Visual Studio Code
+note : In it you can replace 'react-basic' with your project name ( npx create-react-app <project-name> )
+note : npm start -> Run
+* Reopen your project ReactJS with Visual Studio Code
 # Open public>index.html and src>index.js
-	* When run code, index.html will call first and then the next call index.js 
+* When run code, index.html will call first and then the next call index.js 
 # Open src>App.js
-	* Test enter anything code html inside function App(){return(...............)}
+* Test enter anything code html inside function App(){return(...............)}
 //-----------------App.js-----------------
 
-import logo from "./logo.svg";
-import "./App.css";
+    import logo from "./logo.svg";
+    import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>Hello World</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    function App() {
+    return (
+        <div className="App">
+        <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>
+            Edit <code>src/App.js</code> and save to reload.
+            </p>
+            <p>Hello World</p>
+            <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+            Learn React
+            </a>
+        </header>
+        </div>
+    );
+    }
 
-export default App;
+    export default App;
 
 
 //----------------------------------------
