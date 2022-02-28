@@ -18,9 +18,9 @@ II. Hello World with ReactJS
 * Open the folder where you want to create the project
 * Open 'Command Prompt' or 'Git Bash' or 'Termial (in Visual Studio Code)' in this folder
 * Type the following commands
-    * npx create-react-app react-basic
-    * cd react-basic
-    npm start
+        npx create-react-app react-basic
+        cd react-basic
+        npm start
 note : In it you can replace 'react-basic' with your project name ( npx create-react-app <project-name> )
 note : npm start -> Run
 * Reopen your project ReactJS with Visual Studio Code
@@ -30,31 +30,31 @@ note : npm start -> Run
 * Test enter anything code html inside function App(){return(...............)}
 
 
-    import logo from "./logo.svg";
-    import "./App.css";
+        import logo from "./logo.svg";
+        import "./App.css";
 
-    function App() {
-    return (
-        <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-            Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <p>Hello World</p>
-            <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            Learn React
-            </a>
-        </header>
-        </div>
-    );
-    }
+        function App() {
+        return (
+            <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <p>Hello World</p>
+                <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                Learn React
+                </a>
+            </header>
+            </div>
+        );
+        }
 
-    export default App;
+        export default App;
 
 
