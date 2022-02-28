@@ -17,9 +17,9 @@ II. Hello World with ReactJS
 # Create new React App (https://reactjs.org/docs/create-a-new-react-app.html)
 * Open the folder where you want to create the project
 * Open 'Command Prompt' or 'Git Bash' or 'Termial (in Visual Studio Code)' in this folder
-* Type the following commands:
-    npx create-react-app react-basic
-    cd react-basic
+* Type the following commands
+    * npx create-react-app react-basic
+    * cd react-basic
     npm start
 note : In it you can replace 'react-basic' with your project name ( npx create-react-app <project-name> )
 note : npm start -> Run
