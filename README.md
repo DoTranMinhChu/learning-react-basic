@@ -78,7 +78,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 ====================================================================
 # IV. Project React.JS - File Structure
-
+ https://reactjs.org/docs/faq-structure.html
 * index.html
     * Attention : id="root"  
 
@@ -110,7 +110,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
     
             <App />
 
-    * Firstly : index.js call components App (call App.js)
+    * Firstly : index.js call components App (call [App.js])
     * Later : inject code into 
         
             <div id="root"></div>
@@ -124,4 +124,115 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                 document.getElementById('root')
             );
 
+* Where's the connection between [index.html] and [index.js] in a Create-React-App application?
+ link : https://stackoverflow.com/questions/42438171/wheres-the-connection-between-index-html-and-index-js-in-a-create-react-app-app
+
+
+ * Reconstruct project
+    * Create new Folder in [src]
+
+        └───src
+            ├───assets
+            │   ├───audio
+            │   └───images
+            ├───components
+            ├───routes
+            ├───services
+            ├───store
+            ├───styles
+            ├───utils
+            └───views
+
+    * src :
+
+        └───src
+            │   App.css
+            │   App.js
+            │   index.css
+            │   index.js
+            │   App.test.js 
+            │   logo.svg
+            │   reportWebVitals.js
+            │   setupTests.js
+            │
+            ├───assets
+            │   ├───audio
+            │   └───images
+            ├───components
+            ├───routes
+            ├───services
+            ├───store
+            ├───styles
+            ├───utils
+            └───views
+
+    * Detail :
+        * assets : Save image and video .... you want public
+        * components : Shared source code , reuse code
+        * routes : Define router for website
+        * services : API connect backend
+        * store : Code Redux
+        * styles : Code SCSS (not write CSS here)
+        * utils : Shared function
+        * views : Page for the user to see
         
+    * File organization
+        # Install Dependencies SASS
+
+            npm i --save sass
+
+        * Remove [App.test.js] 
+        * Remove [setupTests.js] 
+        * Rename the file [App.css] to [App.scss]
+            * Change import in file [App.js] like that
+
+                    import './App.css';
+
+                to
+
+                    import './App.scss';
+        * Rename the file [index.css] to [global.scss]
+
+        * [src] :
+        
+            └───src
+                │   index.js
+                │   reportWebVitals.js
+                │
+                ├───assets
+                │   ├───audio
+                │   └───images
+                ├───components
+                ├───routes
+                ├───services
+                ├───store
+                ├───styles
+                │       global.scss
+                │
+                ├───utils
+                └───views
+                        App.js
+                        App.scss
+                        logo.svg
+        * [index.js]
+            copy and paste
+
+                import React from 'react';
+                import ReactDOM from 'react-dom';
+                import App from './views/App';
+                import reportWebVitals from './reportWebVitals';
+                import './styles/global.scss';
+
+                ReactDOM.render(
+                <React.StrictMode>
+                    <App />
+                </React.StrictMode>,
+                document.getElementById('root')
+                );
+
+                // If you want to start measuring performance in your app, pass a function
+                // to log results (for example: reportWebVitals(console.log))
+                // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+                reportWebVitals();
+            
+====================================================================
