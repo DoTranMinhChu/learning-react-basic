@@ -3,7 +3,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 ====================================================================
 
-# I . INSTALL ENVIRONMENTS
+# I . Install Environments
 
 * Dowload and Install Visual Studio Code (https://code.visualstudio.com/download)
 * Dowload and Install NodeJS (https://nodejs.org/en/download)
@@ -74,3 +74,54 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             npm i
 
     * Waiting... 
+
+
+====================================================================
+# IV. Project React.JS - File Structure
+
+* index.html
+    * Attention : id="root"  
+
+        <div id="root"></div>
+    * After index.html then the next call index.js 
+
+* index.js
+    
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import './index.css';
+        import App from './App';
+        import reportWebVitals from './reportWebVitals';
+
+        ReactDOM.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>,
+            document.getElementById('root')
+        );
+
+        reportWebVitals();
+
+    * Attention : 
+
+            import App from './App'  
+
+        and   
+    
+            <App />
+
+    * Firstly : index.js call components App (call App.js)
+    * Later : inject code into 
+        
+            <div id="root"></div>
+
+        Through the following code:
+
+            ReactDOM.render(
+                <React.StrictMode>
+                    <App />
+                </React.StrictMode>,
+                document.getElementById('root')
+            );
+
+        
