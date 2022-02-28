@@ -22,7 +22,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             npx create-react-app react-basic
             cd react-basic
             npm start
-            
+
     * note : In it you can replace [react-basic] with your project name ( npx create-react-app <project-name> )
     * note : npm start -> Run
 
@@ -60,3 +60,17 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             export default App;
 
 
+
+====================================================================
+# III. Clone project from github
+* Clone project
+    * Open the folder where you want to create the project
+
+        git clone https://github.com/DoTranMinhChu/learning-react-basic
+    
+    * Open the conled project from github using Visual Studio Code
+    * Open Terminal and type command :
+
+            npm i
+
+    * Waiting... 
