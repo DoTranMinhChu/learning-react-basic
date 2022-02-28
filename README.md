@@ -131,40 +131,40 @@ _______________________REACT.JS FOR BEGINNERS_______________________
  * Reconstruct project
     * Create new Folder in [src]
 
-        └───src
-            ├───assets
-            │   ├───audio
-            │   └───images
-            ├───components
-            ├───routes
-            ├───services
-            ├───store
-            ├───styles
-            ├───utils
-            └───views
+            └───src
+                ├───assets
+                │   ├───audio
+                │   └───images
+                ├───components
+                ├───routes
+                ├───services
+                ├───store
+                ├───styles
+                ├───utils
+                └───views
 
     * src :
 
-        └───src
-            │   App.css
-            │   App.js
-            │   index.css
-            │   index.js
-            │   App.test.js 
-            │   logo.svg
-            │   reportWebVitals.js
-            │   setupTests.js
-            │
-            ├───assets
-            │   ├───audio
-            │   └───images
-            ├───components
-            ├───routes
-            ├───services
-            ├───store
-            ├───styles
-            ├───utils
-            └───views
+            └───src
+                │   App.css
+                │   App.js
+                │   index.css
+                │   index.js
+                │   App.test.js 
+                │   logo.svg
+                │   reportWebVitals.js
+                │   setupTests.js
+                │
+                ├───assets
+                │   ├───audio
+                │   └───images
+                ├───components
+                ├───routes
+                ├───services
+                ├───store
+                ├───styles
+                ├───utils
+                └───views
 
     * Detail :
         * assets : Save image and video .... you want public
@@ -195,25 +195,26 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
         * [src] :
         
-            └───src
-                │   index.js
-                │   reportWebVitals.js
-                │
-                ├───assets
-                │   ├───audio
-                │   └───images
-                ├───components
-                ├───routes
-                ├───services
-                ├───store
-                ├───styles
-                │       global.scss
-                │
-                ├───utils
-                └───views
-                        App.js
-                        App.scss
-                        logo.svg
+                └───src
+                    │   index.js
+                    │   reportWebVitals.js
+                    │
+                    ├───assets
+                    │   ├───audio
+                    │   └───images
+                    ├───components
+                    ├───routes
+                    ├───services
+                    ├───store
+                    ├───styles
+                    │       global.scss
+                    │
+                    ├───utils
+                    └───views
+                            App.js
+                            App.scss
+                            logo.svg
+                            
         * [index.js]
             copy and paste
 
