@@ -143,7 +143,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                 ├───utils
                 └───views
 
-    * src :
+    * [src] :
 
             └───src
                 │   App.css
@@ -214,7 +214,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                             App.js
                             App.scss
                             logo.svg
-                            
+
         * [index.js]
             copy and paste
 
@@ -237,3 +237,145 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                 reportWebVitals();
             
 ====================================================================
+# V.React Components (https://reactjs.org/docs/components-and-props.html)
+* Components are independent and reusable bits of code. They serve the same purpose as JavaScript functions, but work in isolation and return HTML.
+* 2 type components : Class Component and Function Component (fuction , arrow fuction)
+* Fuction Components
+    * Open [src>view>App.js] , we have
+
+            import logo from './logo.svg';
+            import './App.scss';
+
+            function App() {
+                return (
+                    <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <p>
+                        Edit <code>src/App.js</code> and save to reload.
+                        </p>
+                        <p>Hello World</p>
+                        <a
+                        className="App-link"
+                        href="https://reactjs.org"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >
+                        Learn React
+                        </a>
+                    </header>
+                    </div>
+                );
+            }
+
+            export default App;
+
+    * Keyword [import]
+
+            import logo from './logo.svg';
+            import './App.scss';
+        
+        * The static [import] statement is used to import read only live bindings which are exported by another module.
+        * We using [import] when you want to use metarial that is not in this file
+    * Keyword [function]
+
+              function App() {
+                return (
+                   .......
+                );
+            }
+        * This is called function component, this is return html block (JSX)
+        * Also you can use the following function (Arrow Function)
+
+                const func = () =>{
+                    return(
+                        // HTML
+                    );
+                }
+        * Introducing JSX (https://reactjs.org/docs/introducing-jsx.html)
+            
+                const element = <h1>Hello, world</h1>
+            
+            * This tag syntax is JSX (JavaScript Syntax Extension)
+
+* Class Components
+    * Create [views>example>MyClassComponents.js]
+
+            └───views
+                │   ....
+                │   ...
+                │   .....
+                │
+                └───example
+                        MyClassComponent.js
+
+    * Copy and paste the following code into the file [MyClassComponents.js]
+
+            import React from 'react';
+
+            class MyClassComponents extends React.Component{
+
+                render(){
+                    const name = 'MinhChu';
+                    return(
+                        <div>This is Class Component {name}</div>
+                    );
+                }
+
+            }
+
+            export default MyClassComponents;
+        
+      * Keyword [export]
+        * The [export] statement is used when creating JS moudules to export live to fuctions, objects, or primitive value from the moudule so they can used by other programs with the [import] statement.
+        * Ref : (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
+
+    * Use Class Components
+        * Open [views>App.js]
+
+                └───views
+                    │   App.js
+                    │   App.scss
+                    │   logo.svg
+                    │
+                    └───example
+                            MyClassComponent.js
+        
+        * Add the following code into the file [MyClassComponents.js]
+
+                import logo from './logo.svg';
+                import './App.scss';
+                import MyClassComponents from './example/MyClassComponent';
+
+                function App() {
+                    return (
+                        <div className="App">
+                        <header className="App-header">
+                            <img src={logo} className="App-logo" alt="logo" />
+                            <p>
+                            Edit <code>src/App.js</code> and save to reload.
+                            </p>
+                            <p>Hello World</p>
+                            <a
+                            className="App-link"
+                            href="https://reactjs.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            Learn React
+                            </a>
+
+                            <MyClassComponents/>
+                            {/* Uncomment to try */}
+                            {/* <MyClassComponents></MyClassComponents> */}
+
+                        </header>
+                        </div>
+                    );
+                }
+
+                export default App;
+
+            * run and view result
+
+                    npm start
