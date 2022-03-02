@@ -689,4 +689,194 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             })
 
 
+====================================================================
+# IX. Forms in ReactJS - HTML Inputs
+* HTML Form (https://www.w3schools.com/html/html_forms.asp)
+
+* Desgin React Form
+     * Write the following code into the file [src>views>App.js]
+
+
+            import logo from './logo.svg';
+            import './App.scss';
+            import MyClassComponents from './example/MyClassComponent';
+
+            function App() {
+                return (
+                    <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" /> 
+
+                        <MyClassComponents/>
+                        {/* Uncomment to try */}
+                        {/* <MyClassComponents></MyClassComponents> */}
+
+                    </header>
+                    </div>
+                );
+            }
+
+            export default App;
+
+
+    * Write the following code into the file [src>views>example>MyClassComponents.js]
+
+
+            import React from "react";
+
+            class MyClassComponents extends React.Component {
+
+                state={
+                    firstName :'Minh',
+                    lastName :'Chu'
+                }
+
+                render() {
+                    return (
+                        <>
+                            <form action="">
+                            <label >First name:</label>
+                            <br />
+                            <input type="text" value={this.state.firstName} />
+                            <br />
+                            <label>Last name:</label>
+                            <br />
+                            <input type="text" value="" />
+                            <br />
+                            <br />
+                            <input type="submit" value="Submit" />
+                            </form>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+     > Run code and try change data in form input
+     > You can see, we can't change value of input
+
+     * So we can fix this problem by creating event for it
+        * Now write the following code into the file [src>views>example>MyClassComponents.js]
+
+
+                import React from "react";
+
+                class MyClassComponents extends React.Component {
+                    state = {
+                        firstName: "Minh",
+                        lastName: "Chu",
+                    };
+
+                    handleChangeFirstName = (event) => {
+                        this.setState({
+                        firstName: event.target.value,
+                        });
+                    };
+
+                    handleChangeLastName = (event) => {
+                        this.setState({
+                        lastName: event.target.value,
+                        });
+                    };
+
+                    render() {
+                        return (
+                            <>
+                                <h1>
+                                Your name : {this.state.firstName} {this.state.lastName}
+                                </h1>
+                                <form action="">
+                                <label>First name:</label>
+                                <br />
+                                <input
+                                    type="text"
+                                    value={this.state.firstName}
+                                    onChange={(event) => this.handleChangeFirstName(event)}
+                                />
+                                <br />
+                                <label>Last name:</label>
+                                <br />
+                                <input
+                                    type="text"
+                                    value={this.state.lastName}
+                                    onChange={(event) => this.handleChangeLastName(event)}
+                                />
+                                <br />
+                                <br />
+                                <input type="submit" value="Submit" />
+                                </form>
+                            </>
+                        );
+                    }
+                }
+
+                export default MyClassComponents;
+
+        > Run code and try change data in form input
+        > You can see, problem soloved
+
+
+* Submit form
+
+        import React from "react";
+
+        class MyClassComponents extends React.Component {
+        state = {
+            firstName: "Minh",
+            lastName: "Chu",
+        };
+
+        handleChangeFirstName = (event) => {
+            this.setState({
+            firstName: event.target.value,
+            });
+        };
+
+        handleChangeLastName = (event) => {
+            this.setState({
+            lastName: event.target.value,
+            });
+        };
+
+        handleSubmit = (event)=>{
+            event.preventDefault(); // prevent action defaut (submit) of button (type="submit")
+            console.log("Check data input : " + this.state);
+            alert("Hello " + this.state.firstName + " " + this.state.lastName);
+        }
+
+        render() {
+            return (
+            <>
+                <h1>
+                Your name : {this.state.firstName} {this.state.lastName}
+                </h1>
+                <form action="">
+                <label>First name:</label>
+                <br />
+                <input
+                    type="text"
+                    value={this.state.firstName}
+                    onChange={(event) => this.handleChangeFirstName(event)}
+                />
+                <br />
+                <label>Last name:</label>
+                <br />
+                <input
+                    type="text"
+                    value={this.state.lastName}
+                    onChange={(event) => this.handleChangeLastName(event)}
+                />
+                <br />
+                <br />
+                <input type="submit" value="Submit" onClick={(event)=>this.handleSubmit(event)}/>
+                </form>
+            </>
+            );
+        }
+        }
+
+        export default MyClassComponents;
+
+
 
