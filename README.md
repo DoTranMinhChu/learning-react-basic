@@ -493,6 +493,7 @@ https://reactjs.org/docs/faq-structure.html
 
   - Styling and CSS
     (https://reactjs.org/docs/faq-styling.html)
+    
             render() {
                 return <span className="menu navigation-menu">Menu</span>
             }
