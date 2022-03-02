@@ -592,9 +592,9 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 ====================================================================
 # VII. DOM Events
-DOM: (https://www.w3schools.com/js/js_htmldom.asp)
-DOM Events : (https://www.w3schools.com/jsref/dom_obj_event.asp)
-Handling Events: (https://reactjs.org/docs/handling-events.html)
+* DOM: (https://www.w3schools.com/js/js_htmldom.asp)
+* DOM Events : (https://www.w3schools.com/jsref/dom_obj_event.asp)
+* Handling Events: (https://reactjs.org/docs/handling-events.html)
 
 * Test event onClick and onChange 
     * Write the following code into the file [MyClassComponents.js]
@@ -602,11 +602,62 @@ Handling Events: (https://reactjs.org/docs/handling-events.html)
             import React from "react";
 
             class MyClassComponents extends React.Component {
-            state = {
-                name: "DoTranMinhChu",
-                yob: 2001
-            };
+                state = {
+                    name: "DoTranMinhChu",
+                    yob: 2001
+                };
 
+                handleOnChangeName(event){
+                    this.setState({
+                        name : event.target.value
+                    })
+                }
+
+
+                handleOnChangeYob = (event) =>{
+                    this.setState({
+                        yob : event.target.value
+                    })
+                }
+
+                handleClickButton = (event) =>{
+                    console.log(event.target.innerText);
+                    alert("Hello " + this.state.name);
+                }
+
+                render() {
+                    return (
+                        <>
+                            
+                            <div>This is Class Component, My name is {this.state.name}</div>
+                            <div>Year of birth is {this.state["yob"]} </div>
+                            <div>
+                                <input value={this.state.name} type="text" onChange={(event) => { return this.handleOnChangeName(event)} }/>
+                            </div>
+                            <div>
+                                <input value={this.state.yob} type="number" onChange={ (event) => this.handleOnChangeYob(event)}/>
+                            </div>
+                            <div>
+                                <button onClick={(event)=>this.handleClickButton(event)}>Hey {this.state.name}, click me</button>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+
+====================================================================
+# VIII. setSate - Change State and Re-render (https://reactjs.org/docs/conditional-rendering.html)
+
+* Open file [MyClassComponents.js]
+    * We can see code like that :
+
+
+            .....
+            ....
+            ......
             handleOnChangeName(event){
                 this.setState({
                     name : event.target.value
@@ -619,31 +670,23 @@ Handling Events: (https://reactjs.org/docs/handling-events.html)
                     yob : event.target.value
                 })
             }
+            ..
+            ....
+            ..
 
-            handleClickButton = (event) =>{
-                console.log(event.target.innerText);
-                alert("Hello " + this.state.name);
-            }
+    
+    * This is setState
+        > When one or more value of object [state] update , react will recall render() to re-render
+* Bad code
+    * Invalid code 
 
-            render() {
-                return (
-                <>
-                    
-                    <div>This is Class Component, My name is {this.state.name}</div>
-                    <div>Year of birth is {this.state["yob"]} </div>
-                    <div>
-                        <input value={this.state.name} type="text" onChange={(event) => { return this.handleOnChangeName(event)} }/>
-                    </div>
-                    <div>
-                        <input value={this.state.yob} type="number" onChange={ (event) => this.handleOnChangeYob(event)}/>
-                    </div>
-                    <div>
-                        <button onClick={(event)=>this.handleClickButton(event)}>Hey {this.state.name}, click me</button>
-                    </div>
-                </>
-                );
-            }
-            }
+            this.state.name = event.target.value
+        
+    * Valid code 
 
-            export default MyClassComponents;
+            this.setState({
+                name : event.target.value
+            })
+
+
 
