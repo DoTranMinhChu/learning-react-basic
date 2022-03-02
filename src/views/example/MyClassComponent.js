@@ -19,6 +19,11 @@ class MyClassComponents extends React.Component {
     })
   }
 
+  handleClickButton = (event) =>{
+    console.log(event.target.innerText);
+    alert("Hello " + this.state.name);
+  }
+
   render() {
     return (
       <>
@@ -30,6 +35,9 @@ class MyClassComponents extends React.Component {
         </div>
         <div>
             <input value={this.state.yob} type="number" onChange={ (event) => this.handleOnChangeYob(event)}/>
+        </div>
+        <div>
+            <button onClick={(event)=>this.handleClickButton(event)}>Hey {this.state.name}, click me</button>
         </div>
       </>
     );
