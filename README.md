@@ -465,7 +465,7 @@ https://reactjs.org/docs/faq-structure.html
                   );
 
     - In JSX you need to return a block in the render()
-    - So, if you want to render two render two or more (<div>,<section>,...) blocks without any block wrapping it (the parent block), you can use Fragment like this: (https://reactjs.org/docs/fragments.html)
+    - So, if you want to render two render two or more (div,section,...) blocks without any block wrapping it (the parent block), you can use Fragment like this: (https://reactjs.org/docs/fragments.html)
 
       - Old version ( < 16.8 )
 
