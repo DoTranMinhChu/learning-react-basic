@@ -460,7 +460,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                             </React.Fragment>
                         );
                     }
-                    
+
             * New version (>= 16.8)
 
                     render() {
@@ -481,3 +481,109 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                 return <span className="menu navigation-menu">Menu</span>
             }
 
+* State
+    * Write the following code into the file [MyClassComponents.js]
+
+            import React from "react";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    name: "DoTranMinhChu",
+                    yob: 2001,
+                };
+
+                render() {
+                    return (
+                        <>
+                            <div>This is Class Component, My name is {this.state.name}</div>
+                            <div>Year of birth is {this.state['yob']} </div>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+        
+        * [this] : The call method on a function accepts an object that [this] will refer to and any other parameters defined in the function
+        * [this.state] is object
+
+                state = {
+                    name: "DoTranMinhChu",
+                    yob: 2001,
+                };
+
+            > Use this.state.name and this.state.yob to get value of key name and yob in object state
+
+    * When the state object changes, the components re-renders.
+        * Write the following code into the file [MyClassComponents.js]
+        
+                import React from "react";
+
+                class MyClassComponents extends React.Component {
+                    state = {
+                        name: "DoTranMinhChu",
+                        yob: 2001
+                    };
+
+                    handleOnChangeName(event){
+                        this.setState({
+                            name : event.target.value
+                        })
+                    }
+
+
+                    handleOnChangeYob = (event) =>{
+                        this.setState({
+                            yob : event.target.value
+                        })
+                    }
+
+                    render() {
+                        return (
+                        <>
+                            
+                            <div>This is Class Component, My name is {this.state.name}</div>
+                            <div>Year of birth is {this.state["yob"]} </div>
+                            <div>
+                                <input value={this.state.name} type="text" onChange={(event) => { return this.handleOnChangeName(event)} }/>
+                            </div>
+                            <div>
+                                <input value={this.state.yob} type="number" onChange={ (event) => this.handleOnChangeYob(event)}/>
+                            </div>
+                        </>
+                        );
+                    }
+                }
+
+                export default MyClassComponents;
+
+
+            * Run and view result
+                > Try change value two input
+            * Explain code
+                * We have events onChange in each input 
+
+                        onChange={(event) => { return this.handleOnChangeName(event)} }
+
+                        onChange={(event) => this.handleOnChangeYob(event)}
+
+                * There two envents are basically the same (use arrow fuction)
+                * In first event this return handleOnChangeName(event) 
+                    * And we have 
+
+                            handleOnChangeName(event){
+                                this.setState({
+                                    name : event.target.value
+                                })
+                            }
+
+                    * This is the code that define handleOnChangeName(event) . It's same way we define a fuction in a class.
+                    * this.setState allows us to set the value for State, and we can set new value for key 'name' like that
+
+                            this.setState({
+                                name : event.target.value
+                            })
+                        
+                        * In which, use [event.target.value] to get the value of input throught the parameter event
+                * handleOnChangeYob = (event) =>{....}  is same handleOnChangeName(event){...} (handleOnChangeYob use arrow function)
