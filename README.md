@@ -1313,8 +1313,107 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                 
             
 
-            
-                
+
+====================================================================
+# XIII. Stateless/Stateful Components(Function and Class) 
+> (https://www.codecademy.com/learn/react-component-state/modules/react-102-stateless-inherit-stateful-u/cheatsheet#:~:text=Stateful%20and%20Stateless%20Components,there%20are%20two%20React%20components.)
+* In React, a stateful component is a component that holds some state. Stateless components, by contrast, have no state. Note that both types of components can use props.
+
+* Statefull (Class Components)
+    * Write the following code into the file [src>views>example>ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+                render() {
+                    console.log(">> Check props : ", this.props);
+                    let { name, age, jobs } = this.props;
+                    return (
+                        <>
+                            <div>
+                                Child Component : {name} - {age}
+                            </div>
+                            <div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>index</th>
+                                            <th>id</th>
+                                            <th>title</th>
+                                            <th>salary</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {jobs.map((item, index) => {
+                                            return (
+                                            <tr key={item.id}>
+                                                <td>{index}</td>
+                                                <td>{item.id}</td>
+                                                <td>{item.title}</td>
+                                                <td>{item.salary}</td>
+                                            </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+    * Run and see result
+
+* Stateless (Function Components)
+    * Now, we will rewrite the above code but use Stateless (Fuction Component) into file [src>views>example>ChildComponent.js]
+
+            const ChildComponent = (props) => {
+                console.log(">> Check props : ", props);
+                let { name, age, jobs } = props;
+                return (
+                    <>
+                        <div>
+                            Child Component : {name} - {age}
+                        </div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                    <th>index</th>
+                                    <th>id</th>
+                                    <th>title</th>
+                                    <th>salary</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {jobs.map((item, index) => {
+                                    return (
+                                        <tr key={item.id}>
+                                        <td>{index}</td>
+                                        <td>{item.id}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.salary}</td>
+                                        </tr>
+                                    );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                );
+            };
+
+            export default ChildComponent;
+
+
+    * Run and see the result
+    * Just use Fuction component when we use Hook
+
+
+
+
             
             
                 
