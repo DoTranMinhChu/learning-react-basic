@@ -1021,3 +1021,133 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             > Here the line [this.props.nameCustomer] the effect of getting data from the parent component
             > And the data that we have taken here is also the data we assign to the nameCustomer in [App.js] (Parent Component)
 
+
+
+
+====================================================================
+# X. Props  (https://reactjs.org/docs/components-and-props.html)
+> Props are arguments passed into React components
+> Props are passed to components via HTML attribute
+> Props stands for properties
+
+
+* Example props
+    * Write the following code into the file [src>view>app.js]
+
+            import logo from './logo.svg';
+            import './App.scss';
+            import MyClassComponents from './example/MyClassComponent';
+
+            function App() {
+                return (
+                    <div className="App">
+                        <header className="App-header">
+                            <img src={logo} className="App-logo" alt="logo" /> 
+
+                            <MyClassComponents/>
+                            {/* Uncomment to try */}
+                            {/* <MyClassComponents></MyClassComponents> */}
+                    
+                        </header>
+                    </div>
+                );
+            }
+
+            export default App;
+
+    * Write the following code into the file [src>example>MyClassComponent.js]
+
+            import React from "react";
+            import ChildComponent from './ChildComponent';
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    firstName: "Minh",
+                    lastName: "Chu",
+                };
+
+                handleChangeFirstName = (event) => {
+                    this.setState({
+                    firstName: event.target.value,
+                    });
+                };
+
+                handleChangeLastName = (event) => {
+                    this.setState({
+                    lastName: event.target.value,
+                    });
+                };
+
+                handleSubmit = (event) => {
+                    event.preventDefault(); // prevent action defaut (submit) of button (type="submit")
+                    console.log("Check data input : " + this.state);
+                    alert("Hello " + this.state.firstName + " " + this.state.lastName);
+                };
+
+                render() {
+                    return (
+                        <>
+                            <div>
+                                <h1>
+                                    Your name : {this.state.firstName} {this.state.lastName}
+                                </h1>
+                                <form action="">
+                                    <label>First name:</label>
+                                    <br />
+                                    <input
+                                    type="text"
+                                    value={this.state.firstName}
+                                    onChange={(event) => this.handleChangeFirstName(event)}
+                                    />
+                                    <br />
+                                    <label>Last name:</label>
+                                    <br />
+                                    <input
+                                    type="text"
+                                    value={this.state.lastName}
+                                    onChange={(event) => this.handleChangeLastName(event)}
+                                    />
+                                    <br />
+                                    <br />
+                                    <input
+                                    type="submit"
+                                    value="Submit"
+                                    onClick={(event) => this.handleSubmit(event)}
+                                    />
+                                </form>
+                            </div>
+
+                            <ChildComponent name={'Child one'} age={21}/>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+
+    * Write the following code into the file [src>example>ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+                render() {
+                    console.log('>> Check props : ' + this.props);
+                    return (
+                        <>
+                            <div>Child Component : {this.props.name} - {this.props.age}</div>
+                        </>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Child parent component
+
+            App
+                MyClassCompent
+                    ChildComponent
+
+    * Run code
