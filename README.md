@@ -184,7 +184,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
         * Remove [App.test.js] 
         * Remove [setupTests.js] 
         * Rename the file [App.css] to [App.scss]
-            * Change import in file [App.js] like that
+            * Change import in file [App.js] as follows
 
                     import './App.css';
 
@@ -580,7 +580,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                             }
 
                     * This is the code that define handleOnChangeName(event) . It's same way we define a fuction in a class.
-                    * this.setState allows us to set the value for State, and we can set new value for key 'name' like that
+                    * this.setState allows us to set the value for State, and we can set new value for key 'name' as follows
 
                             this.setState({
                                 name : event.target.value
@@ -652,7 +652,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 # VIII. setSate - Change State and Re-render (https://reactjs.org/docs/conditional-rendering.html)
 
 * Open file [MyClassComponents.js]
-    * We can see code like that :
+    * We can see code as follows :
 
 
             .....
@@ -989,7 +989,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             export default App;
 
 
-    * Run code you will see the web display 3 lines like that
+    * Run code you will see the web display 3 lines as follows
     
             Child Component : First Component
             Child Component : Second Component
@@ -1005,7 +1005,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                     ChildComponent
 
         * Even though it's the same component [ChildComponent], it's displayed differently
-            > To explain this, in [App.js] we have like that 
+            > To explain this, in [App.js] we have as follows 
 
                     <ChildComponent nameCustomer="First Component"/>
                     <ChildComponent nameCustomer="Second Component"/>
@@ -1025,7 +1025,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
 ====================================================================
-# X. Props  (https://reactjs.org/docs/components-and-props.html)
+# XI. Props  (https://reactjs.org/docs/components-and-props.html)
 > Props are arguments passed into React components
 > Props are passed to components via HTML attribute
 > Props stands for properties
@@ -1151,3 +1151,170 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                     ChildComponent
 
     * Run code
+
+
+
+
+====================================================================
+# XII. Outputting Lists - Render a lot of data with props 
+
+* Example 
+    * Write the following code into the file [views>example>MyClassComponent.js]
+
+
+            import React from "react";
+            import ChildComponent from "./ChildComponent";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    name:'',
+                    jobs: [
+                        {id : 'j001',title: 'Developer',salary:'500$'},
+                        {id : 'j002',title: 'Tester',salary:'400$'},
+                        {id : 'j003',title: 'Project manager',salary:'1000$'},
+                    ],
+                };
+
+                handleChangeName = (event) => {
+                    this.setState({
+                        name: event.target.value,
+                    });
+                };
+
+
+                render() {
+                    return (
+                        <>
+                            <div>
+                            <h1>
+                                Your name : {this.state.name} {this.state.lastName}
+                            </h1>
+                            <form action="">
+                                <label>Name:</label>
+                                <br />
+                                <input
+                                type="text"
+                                value={this.state.name}
+                                onChange={(event) => this.handleChangeName(event)}
+                                />
+                            </form>
+                            </div>
+
+                            <ChildComponent name={this.state.name } age={21} jobs={this.state.jobs}/>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+
+
+    * Write the following code into the file [views>example>ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+                render() {
+                    console.log(">> Check props : " + this.props);
+                    let { name, age, jobs } = this.props;
+                    return (
+                        <>
+                            <div>
+                            Child Component : {name} - {age}
+                            </div>
+                            <div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>index</th>
+                                            <th>id</th>
+                                            <th>title</th>
+                                            <th>salary</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {jobs.map((item, index) => {
+                                            return (
+                                            <tr key={item.id}>
+                                                <td>{index}</td>
+                                                <td>{item.id}</td>
+                                                <td>{item.title}</td>
+                                                <td>{item.salary}</td>
+                                            </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Explain code:
+        * In file [MyClassComponent.js]
+            * We declare array object jobs as follows
+
+                    state = {
+                        name:'',
+                        jobs: [
+                            {id : 'j001',title: 'Developer',salary:'500$'},
+                            {id : 'j002',title: 'Tester',salary:'400$'},
+                            {id : 'j003',title: 'Project manager',salary:'1000$'},
+                        ],
+                    };
+            
+            * Then we pass this array to component [ChildComponent] as follows
+
+                    <ChildComponent name={this.state.name} age={21} jobs={this.state.jobs}/>
+
+                
+        * In file [ChildComponent.js]
+            * We use 'Destructuring assignment' to declare as follows
+            >Ref(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+
+                    let { name, age, jobs } = this.props;
+
+            * Then we display all information array jobs by table
+                * We use map() method to display 
+                >(https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?retiredLocale=vi)
+                
+                        <tbody>
+                            {jobs.map((item, index) => {
+                                return (
+                                    <tr key={item.id}>
+                                        <td>{index}</td>
+                                        <td>{item.id}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.salary}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+
+                    
+                * You can see 
+
+                        <tr key={item.id}>
+                            ..
+                            ..
+                            ..
+                        </tr>
+
+                    * So , what is [key] and why we need use it
+                        > https://reactjs.org/docs/lists-and-keys.html
+                        > Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity (That's why we used [item.key] as a key).
+                * Final, why we should use map() method
+                    > (https://www.javatpoint.com/react-map#:~:text=method%20used%20to%20traverse%20and,element%20in%20the%20calling%20array.)
+                
+            
+
+            
+                
+            
+            
+                
