@@ -880,3 +880,144 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
 
+====================================================================
+# X. Nesting Components 
+
+* React Nesting Components
+    * In React, we can nest components inside within one another. This helps in creating more complex User Interfaces. The components that are nested inside parent components are called child components. Import and Export keywords facilitate nesting of the components.
+        > Export - This keyword is used to export a particular module or file and use it in another module.
+        > Import - This keyword is used to import a particular module or file and use it in the existing module.
+    * Importing named values allows the user to import multiple objects from a file.
+
+            import {Class1, Class2} from "./Component";
+
+
+* Child - Parent 
+    * In [views>App.js]
+
+
+            import logo from './logo.svg';
+            import './App.scss';
+            import MyClassComponents from './example/MyClassComponent';
+
+            function App() {
+            return (
+                <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" /> 
+
+                    <MyClassComponents/>
+                    {/* Uncomment to try */}
+                    {/* <MyClassComponents></MyClassComponents> */}
+
+                </header>
+                </div>
+            );
+            }
+
+            export default App;
+
+    
+    > We have line [<MyClassComponents/>]
+        > We can see it as  MyClassComponents is child and App is parent
+
+                App
+                    MyClassComponents
+
+* Props (https://reactjs.org/docs/components-and-props.html)
+    * Create [src>views>example>ChildComponent.js]
+
+            ───src
+                │   ..
+                │   ...       
+                │
+                ├───...
+                └───views   
+                    │   ...
+                    │
+                    └───example
+                            ChildComponent.js
+                            MyClassComponent.js
+
+    * Write the following code into the file [ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+                render() {
+                    return (
+                        <>
+                            <div>Child Component : {this.props.nameCustomer}</div>
+                        </>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+
+    * Write the following code into the file [src>views>App.js]
+
+
+
+            import logo from './logo.svg';
+            import './App.scss';
+            import MyClassComponents from './example/MyClassComponent';
+            import ChildComponent from './example/ChildComponent';
+
+            function App() {
+                return (
+                    <div className="App">
+                        <header className="App-header">
+                            <img src={logo} className="App-logo" alt="logo" /> 
+
+                            <MyClassComponents/>
+                            {/* Uncomment to try */}
+                            {/* <MyClassComponents></MyClassComponents> */}
+
+                            <ChildComponent nameCustomer="First Component"/>
+                            <ChildComponent nameCustomer="Second Component"/>
+                            <ChildComponent nameCustomer="Third Component"/>
+
+                            
+                        </header>
+                    </div>
+                );
+            }
+
+            export default App;
+
+
+    * Run code you will see the web display 3 lines like that
+    
+            Child Component : First Component
+            Child Component : Second Component
+            Child Component : Third Component
+
+    * Explain code :
+        * Child Parent components
+
+                App
+                    MyClassComponent
+                    ChildComponent  
+                    ChildComponent
+                    ChildComponent
+
+        * Even though it's the same component [ChildComponent], it's displayed differently
+            > To explain this, in [App.js] we have like that 
+
+                    <ChildComponent nameCustomer="First Component"/>
+                    <ChildComponent nameCustomer="Second Component"/>
+                    <ChildComponent nameCustomer="Third Component"/>
+
+            > Here, for each ChildComponent we pass an attribute to it
+            > Next we will try to get these attributes and to do whatever we want in child component.
+
+        * In file [ChildComponent.js] we have
+
+                 <div>Child Component : {this.props.nameCustomer}</div>
+            
+            > Here the line [this.props.nameCustomer] the effect of getting data from the parent component
+            > And the data that we have taken here is also the data we assign to the nameCustomer in [App.js] (Parent Component)
+

@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.scss';
 import MyClassComponents from './example/MyClassComponent';
+import ChildComponent from './example/ChildComponent';
 
 function App() {
   return (
@@ -12,6 +13,11 @@ function App() {
         {/* Uncomment to try */}
         {/* <MyClassComponents></MyClassComponents> */}
 
+        <ChildComponent nameCustomer="First Component"/>
+        <ChildComponent nameCustomer="Second Component"/>
+        <ChildComponent nameCustomer="Third Component"/>
+
+        
       </header>
     </div>
   );
