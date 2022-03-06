@@ -1413,7 +1413,190 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
 
+====================================================================
+# XIV. Conditional Output (https://reactjs.org/docs/conditional-rendering.html)
 
+
+
+
+* Example
+     * Write the following code into the file [src>views>example>ChildComponent.js]
+
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+
+                render() {
+                    console.log(">> Check props : " + this.props);
+                    let { jobs } = this.props;
+                    return (
+                        <table>
+                        <thead>
+                            <tr>
+                            <th>index</th>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {jobs.map((item, index) => {
+                            return (
+                                <tr key={item.id}>
+                                <td>{index}</td>
+                                <td>{item.id}</td>
+                                <td>{item.title}</td>
+                                <td>{item.salary}</td>
+                                </tr>
+                            );
+                            })}
+                        </tbody>
+                        </table>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Write the following code into the file [src>views>example>MyClassComponent.js]
+
+
+            import React from "react";
+            import ChildComponent from "./ChildComponent";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    jobs: [
+                    { id: "j001", title: "Developer", salary: 500 },
+                    { id: "j002", title: "Tester", salary: 400 },
+                    { id: "j003", title: "Project manager", salary: 1000 },
+                    ],
+                    showJobs: false,
+                };
+
+                handleShowHide = () => {
+                    this.setState({
+                        showJobs: !this.state.showJobs,
+                    });
+                };
+
+                render() {
+                    let { showJobs } = this.state;
+                    return (
+                        <>
+                            {showJobs === false && (
+                            <button onClick={() => this.handleShowHide()}>Show</button>
+                            )}
+
+                            {showJobs && (
+                            <>
+                                <ChildComponent jobs={this.state.jobs} />
+                                <button onClick={() => this.handleShowHide()}>Hide</button>
+                            </>
+                            )}
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+    * Run and view result
+    * Explain code
+        * In [MyClassComponent.js], we have
+
+
+                state = {
+                    ...
+                    ...
+                    showJobs: false,
+                };
+
+                handleShowHide = () => {
+                    this.setState({
+                        showJobs: !this.state.showJobs,
+                    });
+                };
+
+
+            > Arrow function handleShowHide allow variable showJobs convert true to false vice varsa
+        
+        * The next
+
+                {showJobs === false && (
+                    <button onClick={() => this.handleShowHide()}>Show</button>
+                )}
+
+
+                {showJobs && (
+                    <>
+                        <ChildComponent jobs={this.state.jobs} />
+                        <button onClick={() => this.handleShowHide()}>Hide</button>
+                    </>
+                )}
+
+
+            > This code mean if 
             
+                        (showJobs === false) 
             
-                
+                is true then 
+
+                        <button onClick={() => this.handleShowHide()}>Show</button>
+
+                will run
+
+
+            * Note: To make it easier to understand, you can try to run the following JS code:
+
+
+                    const checkTrue = true;
+                    const checkFalse = false;
+                    (checkTrue && alert("Hello this is checkTrue"))
+                    (checkFalse && alert("Hello this is checkFalse"))
+
+
+
+* Besides, we can use the 'ternary operator' to shorten the above code
+    * Rewrite the following code into the file [src>views>example>MyClassComponent.js]
+
+            import React from "react";
+            import ChildComponent from "./ChildComponent";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    jobs: [
+                    { id: "j001", title: "Developer", salary: 500 },
+                    { id: "j002", title: "Tester", salary: 400 },
+                    { id: "j003", title: "Project manager", salary: 1000 },
+                    ],
+                    showJobs: false,
+                };
+
+                handleShowHide = () => {
+                    this.setState({
+                    showJobs: !this.state.showJobs,
+                    });
+                };
+
+                render() {
+                    let { showJobs } = this.state;
+                    return (
+                        <>
+                            {!showJobs ? (
+                                <button onClick={() => this.handleShowHide()}>Show</button>
+                            ) : (
+                                <>
+                                    <ChildComponent jobs={this.state.jobs} />
+                                    <button onClick={() => this.handleShowHide()}>Hide</button>
+                                </>
+                            )}
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
