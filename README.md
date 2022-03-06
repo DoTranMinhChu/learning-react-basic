@@ -1698,7 +1698,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                             <tr>
                             <th>index</th>
                             <th>id</th>
-                            <th>title</th>
+                            <th>Job Name</th>
                             <th>salary</th>
                             </tr>
                         </thead>
@@ -1708,7 +1708,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                                 <tr key={item.id}>
                                 <td>{index}</td>
                                 <td>{item.id}</td>
-                                <td>{item.title}</td>
+                                <td>{item.jobName}</td>
                                 <td>{item.salary}</td>
                                 </tr>
                             );
@@ -1732,9 +1732,9 @@ _______________________REACT.JS FOR BEGINNERS_______________________
         class MyClassComponents extends React.Component {
         state = {
             jobs: [
-            { id: "j001", title: "Developer", salary: 500 },
-            { id: "j002", title: "Tester", salary: 400 },
-            { id: "j003", title: "Project manager", salary: 1000 },
+            { id: "j001", jobName: "Developer", salary: 500 },
+            { id: "j002", jobName: "Tester", salary: 400 },
+            { id: "j003", jobName: "Project manager", salary: 1000 },
             ],
             showJobs: false,
         };
@@ -1766,3 +1766,220 @@ _______________________REACT.JS FOR BEGINNERS_______________________
         }
 
         export default MyClassComponents;
+
+
+
+====================================================================
+# XV. Functions as props
+
+* Example
+    * Write the following code in to the file [src>views>example>AddComponent.js]
+
+            
+            import React from "react";
+
+            class AddComponent extends React.Component {
+                state = {
+                    jobName: "",
+                    salary: +"",
+                };
+
+                handleChangeJobName = (event) => {
+                    this.setState({
+                    jobName: event.target.value,
+                    });
+                };
+
+                handleChangeSalary = (event) => {
+                    this.setState({
+                    salary: +event.target.value,
+                    });
+                };
+
+                handleSubmit = (event) => {
+                    event.preventDefault(); // prevent action defaut (submit) of button (type="submit")
+                    if(!this.state.jobName || !this.state.salary){
+                        alert('Missing infomation');
+                        return;
+                    }
+                    console.log("Check data input : " + this.state);
+                    this.props.addNewJob({
+                        id: "j" + this.getRandomInt(0, 1000),
+                        jobName: this.state.jobName,
+                        salary: this.state.salary,
+                    });
+                    this.setState({
+                        jobName:'',
+                        salary:+''
+                    })
+                };
+
+                getRandomInt(min, max) {
+                    min = Math.ceil(min);
+                    max = Math.floor(max);
+                    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+                }
+
+                render() {
+                    return (
+                        <>
+                            <form action="">
+                            <label>Job name:</label>
+                            <br />
+                            <input
+                                type="text"
+                                value={this.state.jobName}
+                                onChange={(event) => this.handleChangeJobName(event)}
+                            />
+                            <br />
+                            <label>Salary:</label>
+                            <br />
+                            <input
+                                type="number"
+                                value={this.state.salary}
+                                onChange={(event) => this.handleChangeSalary(event)}
+                            />
+                            <br />
+                            <br />
+                            <input
+                                type="submit"
+                                value="Submit"
+                                onClick={(event) => this.handleSubmit(event)}
+                            />
+                            </form>
+                        </>
+                    );
+                }
+            }
+
+            export default AddComponent;
+
+
+
+    * Write the following code in to the file [src>views>example>ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+                render() {
+                    console.log(">> Check props : " + this.props);
+                    let { jobs } = this.props;
+                    return (
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>index</th>
+                                <th>id</th>
+                                <th>Job Name</th>
+                                <th>salary</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {jobs.map((item, index) => {
+                                return (
+                                <tr key={item.id}>
+                                    <td>{index}</td>
+                                    <td>{item.id}</td>
+                                    <td>{item.jobName}</td>
+                                    <td>{item.salary}</td>
+                                </tr>
+                                );
+                            })}
+                            </tbody>
+                        </table>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Write the following code in to the file [src>views>example>MyClassComponent.js]
+
+            import React from "react";
+            import ChildComponent from "./ChildComponent";
+            import AddComponent from "./AddComponent";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    jobs: [
+                        { id: "j001", jobName: "Developer", salary: 500 },
+                        { id: "j002", jobName: "Tester", salary: 400 },
+                        { id: "j003", jobName: "Project manager", salary: 1000 },
+                    ],
+                    showJobs: false,
+                };
+
+                handleShowHide = () => {
+                        this.setState({
+                        showJobs: !this.state.showJobs,
+                    });
+                };
+
+                addNewJob = (job) => {
+                        this.setState({
+                        jobs: [...this.state.jobs,job] // this.state.jobs.push(job)
+                    });
+                };
+
+                render() {
+                    let { showJobs } = this.state;
+                    return (
+                        <>
+                            <AddComponent addNewJob={this.addNewJob} />
+                            <>
+                                {!showJobs ? (
+                                    <button onClick={() => this.handleShowHide()}>Show</button>
+                                ) : (
+                                    <>
+                                    <ChildComponent jobs={this.state.jobs} />
+                                    <button onClick={() => this.handleShowHide()}>Hide</button>
+                                    </>
+                                )}
+                            </>
+                        </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+
+    * Explain code:
+        * In the file [MyClassComponent.js] we have
+
+                <AddComponent addNewJob={this.addNewJob} />
+
+            > The above code helps the *addNewJob function* assign to the *addNewJob parameter*
+        
+        * In the file [AddComponent.js] we have 
+
+                handleSubmit = (event) => {
+                    event.preventDefault(); // prevent action defaut (submit) of button (type="submit")
+                    if(!this.state.jobName || !this.state.salary){
+                        alert('Missing infomation');
+                        return;
+                    }
+                    console.log("Check data input : " + this.state);
+                    this.props.addNewJob({
+                        id: "j" + this.getRandomInt(0, 1000),
+                        jobName: this.state.jobName,
+                        salary: this.state.salary,
+                    });
+                    this.setState({
+                        jobName:'',
+                        salary:+''
+                    })
+                };
+
+
+            * Especially the following code
+            
+                    this.props.addNewJob({
+                        id: "j" + this.getRandomInt(0, 1000),
+                        jobName: this.state.jobName,
+                        salary: this.state.salary,
+                    });
+
+            > *this.props.addNewJob()* call the *addNewJob fuction* assigned to the *addNewJob parameter* at the file [MyClassComponent.js]
+            

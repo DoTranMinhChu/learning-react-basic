@@ -5,9 +5,9 @@ import AddComponent from "./AddComponent";
 class MyClassComponents extends React.Component {
   state = {
     jobs: [
-      { id: "j001", title: "Developer", salary: 500 },
-      { id: "j002", title: "Tester", salary: 400 },
-      { id: "j003", title: "Project manager", salary: 1000 },
+      { id: "j001", jobName: "Developer", salary: 500 },
+      { id: "j002", jobName: "Tester", salary: 400 },
+      { id: "j003", jobName: "Project manager", salary: 1000 },
     ],
     showJobs: false,
   };
@@ -18,11 +18,17 @@ class MyClassComponents extends React.Component {
     });
   };
 
+  addNewJob = (job) => {
+    this.setState({
+      jobs: [...this.state.jobs,job] // this.state.jobs.push(job)
+    });
+  };
+
   render() {
     let { showJobs } = this.state;
     return (
       <>
-        <AddComponent />
+        <AddComponent addNewJob={this.addNewJob} />
         <>
           {!showJobs ? (
             <button onClick={() => this.handleShowHide()}>Show</button>
