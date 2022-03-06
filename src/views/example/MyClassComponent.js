@@ -1,5 +1,6 @@
 import React from "react";
 import ChildComponent from "./ChildComponent";
+import AddComponent from "./AddComponent";
 
 class MyClassComponents extends React.Component {
   state = {
@@ -21,14 +22,17 @@ class MyClassComponents extends React.Component {
     let { showJobs } = this.state;
     return (
       <>
-        {!showJobs ? (
-          <button onClick={() => this.handleShowHide()}>Show</button>
-        ) : (
-          <>
-            <ChildComponent jobs={this.state.jobs} />
-            <button onClick={() => this.handleShowHide()}>Hide</button>
-          </>
-        )}
+        <AddComponent />
+        <>
+          {!showJobs ? (
+            <button onClick={() => this.handleShowHide()}>Show</button>
+          ) : (
+            <>
+              <ChildComponent jobs={this.state.jobs} />
+              <button onClick={() => this.handleShowHide()}>Hide</button>
+            </>
+          )}
+        </>
       </>
     );
   }

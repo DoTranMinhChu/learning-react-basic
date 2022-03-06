@@ -1600,3 +1600,169 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
             export default MyClassComponents;
 
+
+
+
+====================================================================
+# XV. Split Components
+
+* Create new new file [src>views>example>AddComponent.js]
+
+
+        └───src
+            │   ...
+            └───views     
+                │   ....
+                │
+                └───example
+                        AddComponent.js
+                        ChildComponent.js
+                        MyClassComponent.js
+
+
+* Example:
+    * Write the following code in to the file [src>views>example>AddComponent.js]
+
+            import React from "react";
+
+            class AddComponent extends React.Component {
+                state = {
+                    jobName: "",
+                    salary: +'',
+                };
+
+                handleChangeJobName = (event) => {
+                    this.setState({
+                    jobName: event.target.value,
+                    });
+                };
+
+                handleChangeSalary = (event) => {
+                    this.setState({
+                    salary: +event.target.value,
+                    });
+                };
+
+                handleSubmit = (event) => {
+                    event.preventDefault(); // prevent action defaut (submit) of button (type="submit")
+                    console.log("Check data input : " + this.state);
+                };
+                render() {
+                    return (
+                        <>
+                                <form action="">
+                                    <label>Job name:</label>
+                                    <br />
+                                    <input
+                                    type="text"
+                                    value={this.state.jobName}
+                                    onChange={(event) => this.handleChangeJobName(event)}
+                                    />
+                                    <br />
+                                    <label>Salary:</label>
+                                    <br />
+                                    <input
+                                    type="number"
+                                    value={this.state.salary}
+                                    onChange={(event) => this.handleChangeSalary(event)}
+                                    />
+                                    <br />
+                                    <br />
+                                    <input
+                                    type="submit"
+                                    value="Submit"
+                                    onClick={(event) => this.handleSubmit(event)}
+                                    />
+                                </form>
+                        </>
+                    );
+                }
+            }
+
+            export default AddComponent;
+
+
+
+    * Write the following code in to the file [src>views>example>ChildComponent.js]
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+
+                render() {
+                    console.log(">> Check props : " + this.props);
+                    let { jobs } = this.props;
+                    return (
+                        <table>
+                        <thead>
+                            <tr>
+                            <th>index</th>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {jobs.map((item, index) => {
+                            return (
+                                <tr key={item.id}>
+                                <td>{index}</td>
+                                <td>{item.id}</td>
+                                <td>{item.title}</td>
+                                <td>{item.salary}</td>
+                                </tr>
+                            );
+                            })}
+                        </tbody>
+                        </table>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Write the following code in to the file [src>views>example>MyCalssComponent.js]
+
+
+        import React from "react";
+        import ChildComponent from "./ChildComponent";
+        import AddComponent from "./AddComponent";
+
+        class MyClassComponents extends React.Component {
+        state = {
+            jobs: [
+            { id: "j001", title: "Developer", salary: 500 },
+            { id: "j002", title: "Tester", salary: 400 },
+            { id: "j003", title: "Project manager", salary: 1000 },
+            ],
+            showJobs: false,
+        };
+
+        handleShowHide = () => {
+            this.setState({
+            showJobs: !this.state.showJobs,
+            });
+        };
+
+        render() {
+            let { showJobs } = this.state;
+            return (
+            <>
+                <AddComponent />
+                <>
+                {!showJobs ? (
+                    <button onClick={() => this.handleShowHide()}>Show</button>
+                ) : (
+                    <>
+                    <ChildComponent jobs={this.state.jobs} />
+                    <button onClick={() => this.handleShowHide()}>Hide</button>
+                    </>
+                )}
+                </>
+            </>
+            );
+        }
+        }
+
+        export default MyClassComponents;
