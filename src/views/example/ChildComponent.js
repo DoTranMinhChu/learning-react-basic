@@ -1,6 +1,12 @@
 import React from "react";
 
 class ChildComponent extends React.Component {
+
+  handleOnclickDelete = (job) =>{
+    console.log(job);
+    this.props.deleteAJob(job);
+  }
+
   render() {
     console.log(">> Check props : " + this.props);
     let { jobs } = this.props;
@@ -12,6 +18,7 @@ class ChildComponent extends React.Component {
             <th>id</th>
             <th>Job Name</th>
             <th>salary</th>
+            <th>action</th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +29,7 @@ class ChildComponent extends React.Component {
                 <td>{item.id}</td>
                 <td>{item.jobName}</td>
                 <td>{item.salary}</td>
+                <td><button onClick={()=>this.handleOnclickDelete(item)}>X</button></td>
               </tr>
             );
           })}

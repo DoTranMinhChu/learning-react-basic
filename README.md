@@ -1946,6 +1946,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
     * Explain code:
+    > Ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
         * In the file [MyClassComponent.js] we have
 
                 <AddComponent addNewJob={this.addNewJob} />
@@ -1982,4 +1983,169 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                     });
 
             > *this.props.addNewJob()* call the *addNewJob fuction* assigned to the *addNewJob parameter* at the file [MyClassComponent.js]
-            
+
+
+
+
+
+====================================================================
+# XV. Deleting Data with ReactJS
+
+
+* Example code
+    * Write the following code in to the file [src>views>example>MyClassComponent.js]
+    
+            import React from "react";
+            import ChildComponent from "./ChildComponent";
+            import AddComponent from "./AddComponent";
+
+            class MyClassComponents extends React.Component {
+                state = {
+                    jobs: [
+                        { id: "j001", jobName: "Developer", salary: 500 },
+                        { id: "j002", jobName: "Tester", salary: 400 },
+                        { id: "j003", jobName: "Project manager", salary: 1000 },
+                    ],
+                    showJobs: false,
+                };
+
+                handleShowHide = () => {
+                    this.setState({
+                        showJobs: !this.state.showJobs,
+                    });
+                };
+
+                addNewJob = (job) => {
+                    let currentJobs = this.state.jobs;
+                    currentJobs.push(job);
+                    this.setState({
+                        jobs: currentJobs, // [...this.state.jobs,job]
+                    });
+                };
+
+                deleteAJob = (job) => {
+                    let currentJobs = this.state.jobs;
+                    currentJobs = currentJobs.filter((item) => item.id !== job.id);
+                    this.setState({
+                        jobs: currentJobs,
+                    });
+                };
+
+                render() {
+                    let { showJobs } = this.state;
+                    return (
+                    <>
+                        <AddComponent addNewJob={this.addNewJob} />
+                        <>
+                            {!showJobs ? (
+                                <button onClick={() => this.handleShowHide()}>Show</button>
+                            ) : (
+                                <>
+                                <ChildComponent
+                                    jobs={this.state.jobs}
+                                    deleteAJob={this.deleteAJob}
+                                />
+                                <button onClick={() => this.handleShowHide()}>Hide</button>
+                                </>
+                            )}
+                        </>
+                    </>
+                    );
+                }
+            }
+
+            export default MyClassComponents;
+
+
+    * Write the following code in to the file [src>views>example>ChildComponent.js]
+
+
+            import React from "react";
+
+            class ChildComponent extends React.Component {
+
+                handleOnclickDelete = (job) =>{
+                    console.log(job);
+                    this.props.deleteAJob(job);
+                }
+
+                render() {
+                    console.log(">> Check props : " + this.props);
+                    let { jobs } = this.props;
+                    return (
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>index</th>
+                            <th>id</th>
+                            <th>Job Name</th>
+                            <th>salary</th>
+                            <th>action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {jobs.map((item, index) => {
+                                return (
+                                <tr key={item.id}>
+                                    <td>{index}</td>
+                                    <td>{item.id}</td>
+                                    <td>{item.jobName}</td>
+                                    <td>{item.salary}</td>
+                                    <td><button onClick={()=>this.handleOnclickDelete(item)}>X</button></td>
+                                </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                    );
+                }
+            }
+
+            export default ChildComponent;
+
+
+    * Explain code
+        * In file [MyClassComponent.js]
+
+                deleteAJob = (job) => {
+                    let currentJobs = this.state.jobs;
+                    currentJobs = currentJobs.filter((item) => item.id !== job.id);
+                    this.setState({
+                        jobs: currentJobs,
+                    });
+                };
+        
+        > ref Filter : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter?retiredLocale=vi
+
+        
+                <ChildComponent
+                    jobs={this.state.jobs}
+                    deleteAJob={this.deleteAJob}
+                />
+        > The next we to the *deleteAJob function* assign to the *deleteAJob parameter*
+
+
+        * In file [ChildComponent.js]
+
+
+                handleOnclickDelete = (job) =>{
+                    console.log(job);
+                    this.props.deleteAJob(job);
+                }
+
+        > We use this.props.deleteAJob(..) to call the function
+
+                deleteAJob = (job) => {
+                    let currentJobs = this.state.jobs;
+                    currentJobs = currentJobs.filter((item) => item.id !== job.id);
+                    this.setState({
+                        jobs: currentJobs,
+                    });
+                };
+
+         In file [MyClassComponent.js] , and pass parameter job by *this.props.deleteAJob(job)*
+
+        > Here, although the *deleteAJob function* is called in the [ChildComponent], but key *this* (this.state....)here still refers to [MyClassComponent]
+
+
+        

@@ -2,6 +2,7 @@ import React from "react";
 import ChildComponent from "./ChildComponent";
 import AddComponent from "./AddComponent";
 
+
 class MyClassComponents extends React.Component {
   state = {
     jobs: [
@@ -10,6 +11,8 @@ class MyClassComponents extends React.Component {
       { id: "j003", jobName: "Project manager", salary: 1000 },
     ],
     showJobs: false,
+    check : 'chu'
+    
   };
 
   handleShowHide = () => {
@@ -19,8 +22,18 @@ class MyClassComponents extends React.Component {
   };
 
   addNewJob = (job) => {
+    let currentJobs = this.state.jobs;
+    currentJobs.push(job);
     this.setState({
-      jobs: [...this.state.jobs,job] // this.state.jobs.push(job)
+      jobs: currentJobs, // [...this.state.jobs,job]
+    });
+  };
+
+  deleteAJob = (job) => {
+    let currentJobs = this.state.jobs;
+    currentJobs = currentJobs.filter((item) => item.id !== job.id);
+    this.setState({
+      jobs: currentJobs,
     });
   };
 
@@ -34,7 +47,10 @@ class MyClassComponents extends React.Component {
             <button onClick={() => this.handleShowHide()}>Show</button>
           ) : (
             <>
-              <ChildComponent jobs={this.state.jobs} />
+              <ChildComponent
+                jobs={this.state.jobs}
+                deleteAJob={this.deleteAJob}
+              />
               <button onClick={() => this.handleShowHide()}>Hide</button>
             </>
           )}
