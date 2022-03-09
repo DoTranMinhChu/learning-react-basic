@@ -1770,7 +1770,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
 ====================================================================
-# XV. Functions as props
+# XVI. Functions as props
 
 * Example
     * Write the following code in to the file [src>views>example>AddComponent.js]
@@ -1989,7 +1989,7 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
 
 ====================================================================
-# XV. Deleting Data with ReactJS
+# XVII. Deleting Data with ReactJS
 
 
 * Example code
@@ -2148,4 +2148,10 @@ _______________________REACT.JS FOR BEGINNERS_______________________
         > Here, although the *deleteAJob function* is called in the [ChildComponent], but key *this* (this.state....)here still refers to [MyClassComponent]
 
 
-        
+
+
+
+====================================================================
+# XVIII. React Lifecycle Methods 
+>(https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+>(https://reactjs.org/docs/state-and-lifecycle.html)

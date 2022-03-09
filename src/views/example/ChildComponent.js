@@ -1,4 +1,5 @@
 import React from "react";
+import './Demo.css';
 
 class ChildComponent extends React.Component {
 
