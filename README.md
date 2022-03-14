@@ -2554,12 +2554,12 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
             * The line
             
-                 {!isEmptyObj && item.id === editTodo.id ? <something-A> : <something-B>}
+                    {!isEmptyObj && item.id === editTodo.id ? <something-A> : <something-B>}
 
             >  With  let isEmptyObj = Object.keys(editTodo).length === 0;
             >  This meaning *editTodo* (this.state.editTodo) is empty and *item.id === editTodo.id* (*item* is each item in table display *listTodo*) , will display *something-A* , and if vice versa display *something-B* 
 
 
-            
+   
 
            
