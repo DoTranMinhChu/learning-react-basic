@@ -2155,3 +2155,411 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 # XVIII. React Lifecycle Methods 
 >(https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 >(https://reactjs.org/docs/state-and-lifecycle.html)
+
+
+====================================================================
+# XIX. Build Todo App - CRUD
+
+* Reference code TodoApp
+    * Install [React-Toastify]
+        > ref : (https://www.npmjs.com/package/react-toastify)
+
+                npm install --save react-toastify
+
+        > Try Toast here https://fkhadra.github.io/react-toastify/introduction/
+
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    <ToastContainer />
+
+        > We will use this Toast Container
+
+    * Code TodoApp
+        * Create files and folders as follows:
+
+                └───views
+                    │
+                    │
+                    ├─....
+                    ├─....
+                    │
+                    └───Todos
+                            AddTodo.js
+                            ListTodo.js
+                            ListTodo.scss
+
+        * Write the following code into the file [src>views>App.js]
+
+                import logo from "./logo.svg";
+                import "./App.scss";
+                import ListTodo from "./Todos/ListTodo";
+                import { ToastContainer } from "react-toastify";
+                import "react-toastify/dist/ReactToastify.css";
+
+                function App() {
+                    return (
+                        <div className="App">
+                            <header className="App-header">
+                                <img src={logo} className="App-logo" alt="logo" />
+                                <p>Todo app</p>
+                                <ListTodo />
+                            </header>
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
+                            <ToastContainer />
+                        </div>
+                    );
+                }
+
+                export default App;
+
+
+        *  Write the following code into the file [src>views>App.scss]
+
+
+                .App {
+                    text-align: center;
+                }
+
+                .App-logo {
+                    height: 40vmin;
+                    pointer-events: none;
+                }
+
+                @media (prefers-reduced-motion: no-preference) {
+                    .App-logo {
+                        animation: App-logo-spin infinite 20s linear;
+                    }
+                }
+
+                .App-header {
+                    background-color: #282c34;
+                    min-height: 100vh;
+                    // display: flex;
+                    // flex-direction: column;
+                    // align-items: center;
+                    // justify-content: center;
+                    font-size: calc(10px + 2vmin);
+                    color: white;
+                    padding: 64px;
+                }
+
+                .App-link {
+                    color: #61dafb;
+                }
+
+                @keyframes App-logo-spin {
+                    from {
+                        transform: rotate(0deg);
+                    }
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
+
+        * Write the following code into the file [src>views>Todos>ListTodo.js]
+
+
+                import React from "react";
+                import AddTodo from "./AddTodo";
+                import { toast } from "react-toastify";
+                import "./ListTodo.scss";
+
+                class ListTodo extends React.Component {
+                    state = {
+                        listTodo: [
+                        { id: "todo1", title: "Learning" },
+                        { id: "todo2", title: "Cooking" },
+                        { id: "todo3", title: "Sleeping" },
+                        { id: "todo4", title: "Working" },
+                        ],
+                        editTodo: {},
+                    };
+
+                    handleAddTodo = (newTodo) => {
+                        this.setState({
+                        listTodo: [...this.state.listTodo, newTodo],
+                        });
+                        toast.success("Success adding to listTodo!");
+                    };
+
+                    handleDeleteTodo = (todo) => {
+                        let currentTodo = this.state.listTodo;
+                        currentTodo = currentTodo.filter((item) => item.id !== todo.id);
+                        this.setState({
+                        listTodo: currentTodo,
+                        });
+                        toast.success("Success delete!");
+                    };
+
+                    handleEditTodo = (todo) => {
+                        this.setState({
+                        editTodo: todo,
+                        });
+                    };
+
+                    handlSaveTodo = () => {
+                        let { editTodo, listTodo } = this.state;
+                        let currentTodo = [...listTodo];
+                        let objIndex = currentTodo.findIndex((obj) => obj.id === editTodo.id);
+                        currentTodo[objIndex].title = editTodo.title;
+                        this.setState({
+                        listTodo: currentTodo,
+                        editTodo: {},
+                        });
+                        toast.success("Success save!");
+                    };
+
+                    handleChangeEditTodo = (event) => {
+                        this.setState({
+                        editTodo: { id: this.state.editTodo.id, title: event.target.value },
+                        });
+                    };
+
+                    render() {
+                        let { listTodo, editTodo } = this.state;
+                        let isEmptyObj = Object.keys(editTodo).length === 0;
+                        console.log(">>> check isEmptyObj : ", isEmptyObj);
+                        return (
+                            <div className="list-todo-container">
+                                <AddTodo addTodo={this.handleAddTodo} />
+                                <div className="list-todo-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>NO</th>
+                                                <th>Todo id</th>
+                                                <th>Title</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {listTodo.map((item, index) => {
+                                                return (
+                                                <tr key={item.id}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item.id}</td>
+                                                    <td>
+                                                    {!isEmptyObj && item.id === editTodo.id ? (
+                                                        <input
+                                                        title="text"
+                                                        value={editTodo.title}
+                                                        onChange={(event) => this.handleChangeEditTodo(event)}
+                                                        ></input>
+                                                    ) : (
+                                                        item.title
+                                                    )}
+                                                    </td>
+                                                    <td>
+                                                    {!isEmptyObj && item.id === editTodo.id ? (
+                                                        <button onClick={() => this.handlSaveTodo()}>
+                                                        Save
+                                                        </button>
+                                                    ) : (
+                                                        <button onClick={() => this.handleEditTodo(item)}>
+                                                        Edit
+                                                        </button>
+                                                    )}
+
+                                                    <button onClick={() => this.handleDeleteTodo(item)}>
+                                                        Delete
+                                                    </button>
+                                                    </td>
+                                                </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        );
+                    }
+                }
+
+                export default ListTodo;
+
+
+        * Write the following code into the file [src>views>Todos>AddTodo.js]
+
+                import React from "react";
+                import { toast } from "react-toastify";
+
+                class AddTodo extends React.Component {
+                    state = {
+                        newTitle: "",
+                    };
+
+                    getRandomInt(min, max) {
+                        min = Math.ceil(min);
+                        max = Math.floor(max);
+                        return Math.floor(Math.random() * (max - min) + min);
+                    }
+                    handleAdd = (event) => {
+                        event.preventDefault();
+                        if (!this.state.newTitle) {
+                        toast.error(`Missing title's Todo!`);
+                        return;
+                        }
+                        let newId = "todo" + this.getRandomInt(0, 1000);
+                        let newTitle = this.state.newTitle;
+
+                        this.props.addTodo({
+                        id: newId,
+                        title: newTitle,
+                        });
+                        this.setState({
+                        newTitle: "",
+                        });
+                    };
+                    handleChangeNewTitle = (event) => {
+                        this.setState({
+                        newTitle: event.target.value,
+                        });
+                    };
+                    render() {
+                        return (
+                        <>
+                            <div className="add-todo">
+                                <input
+                                    type="text"
+                                    value={this.state.newTitle}
+                                    onChange={(event) => {
+                                    this.handleChangeNewTitle(event);
+                                    }}
+                                />
+                                <button
+                                    className="btn"
+                                    onClick={(event) => {
+                                    this.handleAdd(event);
+                                    }}
+                                >
+                                    Add
+                                </button>
+                            </div>
+                        </>
+                        );
+                    }
+                }
+
+                export default AddTodo;
+    * Explain code:
+        * In file [src>views>App.js]
+
+                import { ToastContainer } from "react-toastify";
+                import "react-toastify/dist/ReactToastify.css";
+
+        > Import react toastify we installed above, it helps us to show the notifications
+
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <ToastContainer />
+        
+
+        > This is Toast Container 
+        > We can copy this code in (https://fkhadra.github.io/react-toastify/introduction/)
+        
+        * In file [src>views>Todos>ListTodo.js]
+
+                state = {
+                    listTodo: [
+                        { id: "todo1", title: "Learning" },
+                        { id: "todo2", title: "Cooking" },
+                        { id: "todo3", title: "Sleeping" },
+                        { id: "todo4", title: "Working" },
+                    ],
+                    editTodo: {},
+                };
+
+
+        > Object *editTodo* to save object (item of listTodo) to update
+
+                handleDeleteTodo = (todo) => {
+                    let currentTodo = this.state.listTodo;
+                    currentTodo = currentTodo.filter((item) => item.id !== todo.id);
+                    this.setState({
+                        listTodo: currentTodo,
+                    });
+                    toast.success("Success delete!");
+                };
+
+        > Line *currentTodo = currentTodo.filter((item) => item.id !== todo.id);* to filter all object in *state.listTodo* that is not paramter *todo* (*todo* is object we need remove from *state.listTodo*).
+        > Line *toast.success("Success delete!");* is display notification with content "Success delete!" (react-toastify)
+
+        * In file [src>views>Todos>ListTodo.js]
+
+                ..
+                ...
+                <tbody>
+                    {listTodo.map((item, index) => {
+                        return (
+                        <tr key={item.id}>
+                            <td>{index + 1}</td>
+                            <td>{item.id}</td>
+                            <td>
+                            {!isEmptyObj && item.id === editTodo.id ? (
+                                <input
+                                title="text"
+                                value={editTodo.title}
+                                onChange={(event) => this.handleChangeEditTodo(event)}
+                                ></input>
+                            ) : (
+                                item.title
+                            )}
+                            </td>
+                            <td>
+                            {!isEmptyObj && item.id === editTodo.id ? (
+                                <button onClick={() => this.handlSaveTodo()}>
+                                Save
+                                </button>
+                            ) : (
+                                <button onClick={() => this.handleEditTodo(item)}>
+                                Edit
+                                </button>
+                            )}
+
+                            <button onClick={() => this.handleDeleteTodo(item)}>
+                                Delete
+                            </button>
+                            </td>
+                        </tr>
+                        );
+                    })}
+                </tbody>
+
+            * The line
+            
+                 {!isEmptyObj && item.id === editTodo.id ? <something-A> : <something-B>}
+
+            >  With  let isEmptyObj = Object.keys(editTodo).length === 0;
+            >  This meaning *editTodo* (this.state.editTodo) is empty and *item.id === editTodo.id* (*item* is each item in table display *listTodo*) , will display *something-A* , and if vice versa display *something-B* 
+
+
+            
+
+           

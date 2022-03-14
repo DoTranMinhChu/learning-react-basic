@@ -1,0 +1,23 @@
+.list-todo-content {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    td,
+    th {
+        padding: 5px 10px;
+        border: 1px solid;
+    }
+    table {
+        border: 1px solid;
+        width: 80%;
+        border-collapse: collapse;
+    }
+    input {
+        font-size: large;
+        padding: 8px;
+    }
+    button {
+        padding: 8px 24px;
+        margin: 4px 16px;
+    }
+}
