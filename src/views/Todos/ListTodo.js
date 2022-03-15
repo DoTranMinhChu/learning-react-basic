@@ -15,7 +15,7 @@ class ListTodo extends React.Component {
   };
 
   handleAddTodo = (newTodo) => {
-    this.setState({
+    this.setState({ 
       listTodo: [...this.state.listTodo, newTodo],
     });
     toast.success("Success adding to listTodo!");
@@ -29,7 +29,6 @@ class ListTodo extends React.Component {
     });
     toast.success("Success delete!");
   };
-
   handleEditTodo = (todo) => {
     this.setState({
       editTodo: todo,

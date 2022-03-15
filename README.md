@@ -2560,6 +2560,363 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             >  This meaning *editTodo* (this.state.editTodo) is empty and *item.id === editTodo.id* (*item* is each item in table display *listTodo*) , will display *something-A* , and if vice versa display *something-B* 
 
 
-   
 
-           
+====================================================================
+# XX. React Routers (https://reactrouter.com/)
+> ref : https://v5.reactrouter.com/web/guides/quick-start
+* Install react-router-dom 
+> (https://www.npmjs.com/package/react-router-dom)
+> (https://github.com/remix-run/react-router)
+
+
+        npm install react-router-dom
+
+
+* Upgrading from v5
+> https://reactrouter.com/docs/en/v6/upgrading/v5#upgrading-from-v5
+
+
+* Example:
+    * Create files and folders (Home.js & Navigation..)following:
+
+
+            │
+            ├───...
+            └───views
+                │   ...
+                │   ....
+                ├───example
+                │       Home.js
+                │       .....
+                ├───Navigation
+                │       Navigation.js
+                │       Navigation.scss
+                │
+                └───Todos
+                        ....
+                        ....
+                        ....
+
+
+    * Writing the following code into the file [src>views>App.js]
+
+            import logo from "./logo.svg";
+            import "./App.scss";
+            import ListTodo from "./Todos/ListTodo";
+            import MyClassComponent from "./example/MyClassComponent";
+            import Home from "./example/Home";
+            import { ToastContainer } from "react-toastify";
+            import "react-toastify/dist/ReactToastify.css";
+            import Navigation from "./Navigation/Navigation";
+            import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+            function App() {
+                return (
+                    <BrowserRouter>
+                    <div className="App">
+                        <Navigation />
+                        <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <Routes>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/todo-app" element={<ListTodo />} />
+                            <Route path="/about" element={<MyClassComponent />} />
+                            <Route path="/" element={<div>Main page</div>} />
+                        </Routes>
+                        </header>
+                    </div>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                    <ToastContainer />
+                    </BrowserRouter>
+                );
+            }
+
+            export default App;
+
+
+    * Writing the following code into the file [src>views>Navigation>Navigation.js]
+
+            import React from "react";
+            import "./Navigation.scss";
+            import { Link, NavLink } from "react-router-dom";
+
+            class Navigation extends React.Component {
+                render() {
+                    return (
+                        <>
+                            <div className="topnav">
+                            <Link to="/">Main</Link>
+                            <Link to="home">Home</Link>
+                            <Link to="todo-app">Todo App</Link>
+                            <Link to="about">About</Link>
+                            </div>
+                            {/* Uncomand and try code */}
+                            {/* <div className="topnav">
+                            <NavLink to="/" activeClass="active">Main</NavLink>
+                            <NavLink to="home" activeClass="active">Home</NavLink>
+                            <NavLink to="todo-app" activeClass="active">Todo App</NavLink>
+                            <NavLink to="about" activeClass="active">About</NavLink>
+                            </div> */}
+                            {/* Uncomand and try code V.6 */}
+                            {/* <div className="topnav">
+                            <NavLink
+                                to="/"
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
+                                Main
+                            </NavLink>
+                            <NavLink
+                                to="/home"
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
+                                Home
+                            </NavLink>
+                            <NavLink
+                                to="todo-app"
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
+                                Todo App
+                            </NavLink>
+                            <NavLink
+                                to="about"
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
+                                About
+                            </NavLink>
+                            </div> */}
+                        </>
+                    );
+                }
+            }
+
+            export default Navigation;
+
+
+    * Writing the following code into the file [src>views>Navigation>Navigation.scss]
+
+            .topnav {
+                overflow: hidden;
+                background-color: rgb(124, 124, 124);
+            }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+            .topnav a:hover {
+                background-color: #b4b4b4;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #b4b4b4;
+                color: white;
+            }
+
+    * Writing the following code into the file [src>views>example>Home.js]
+
+
+            import React, { useEffect } from "react";
+            import { useNavigate } from "react-router-dom";
+
+            function Home() {
+                let navigate = useNavigate();
+
+                useEffect(() => {
+                    setTimeout(() => {
+                    navigate("/todo-app");
+                    }, 3000);
+                    setTimeout(() => {
+                    navigate("/home");
+                    }, 6000);
+                });
+                return (
+                    <div>
+                    <h1>Home page. Wating 3 second</h1>
+                    </div>
+                );
+            }
+
+            export default Home;
+
+
+
+* Explain code 
+    # Route react
+    * In the file [src>views>App.js]
+        
+        * Brower Router (https://v5.reactrouter.com/web/api/BrowserRouter)
+
+                <BrowserRouter>
+                    .... 
+                </BrowserRouter>
+            
+            * That use the HTML5 history API to keep your UI in sync with the URL
+
+        * Routes and Route
+        > V.5 : Using Switch and Route 
+            > https://v5.reactrouter.com/web/example/nesting
+            > https://v5.reactrouter.com/web/api/Switch
+            > https://v5.reactrouter.com/web/api/Route
+        > V.6 : Upgrade all Switch to Routes
+            >  https://reactrouter.com/docs/en/v6/upgrading/v5#upgrade-all-switch-elements-to-routes
+
+
+                <BrowserRouter>
+                    <div className="App">
+                        <Navigation />
+                        <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <Routes>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/todo-app" element={<ListTodo />} />
+                            <Route path="/about" element={<MyClassComponent />} />
+                            <Route path="/" element={<div>Main page</div>} />
+                        </Routes>
+                        </header>
+                    </div>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                    <ToastContainer />
+                </BrowserRouter>
+        
+
+        > &lt;Routes&gt; is **unique** in that it renders a route *exclusiety*.  In contrast, every &lt;Route&gt; that matches the location renders inclusively. Consider these routes(In the file [src>views>App.js]):
+
+                 <BrowserRouter>
+                   ...
+                   ..
+                    <Routes>
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/todo-app" element={<ListTodo />} />
+                        <Route path="/about" element={<MyClassComponent />} />
+                        <Route path="/" element={<div>Main page</div>} />
+                    </Routes>
+                   ...
+                   ....
+                </BrowserRouter>
+            
+        > If the URL is **/home** then &lt;Routes /&gt; will *render* because it match the path.
+
+
+    # Link & NavLink
+    > https://v5.reactrouter.com/web/api/Link
+    > https://v5.reactrouter.com/web/api/NavLink
+    > https://reactrouter.com/docs/en/v6/upgrading/v5#note-on-link-to-values
+    
+    * Link 
+
+            <div className="topnav">
+                <Link to="/">Main</Link>
+                <Link to="home">Home</Link>
+                <Link to="todo-app">Todo App</Link>
+                <Link to="about">About</Link>
+            </div>
+        
+        > Link to="..." presentaion of the Link location, create by concatenating the location's pathname...
+    
+    * NavLink (v.5)
+
+            <div className="topnav">
+                <NavLink to="/" activeClass="active">Main</NavLink>
+                <NavLink to="home" activeClass="active">Home</NavLink>
+                <NavLink to="todo-app" activeClass="active">Todo App</NavLink>
+                <NavLink to="about" activeClass="active">About</NavLink>
+            </div>
+
+        > A special version of the &lt;Link&gt; that will add styling attributes to the rendered element when it matches the current URL.
+        > activeClassName: The class to give the element when it is active. The default given class is active. This will be joined with the className prop.
+        > In React Router v6, activeClassName will be removed and you should use the function className to apply classnames to either active or inactive NavLink components.
+    
+    * NavLink (V.6)
+    > As of v6.0.0-beta.3, the activeClassName and activeStyle props have been removed from NavLinkProps. Instead, you can pass a function to either style or className that will allow you to customize the inline styling or the class string based on the component's active state.
+    > https://reactrouter.com/docs/en/v6/upgrading/v5#remove-activeclassname-and-activestyle-props-from-navlink-
+
+            <div className="topnav">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                    Main
+                </NavLink>
+                <NavLink
+                    to="/home"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                    Home
+                </NavLink>
+                <NavLink
+                    to="todo-app"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                    Todo App
+                </NavLink>
+                <NavLink
+                    to="about"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                >
+                    About
+                </NavLink>
+            </div>
+    
+    * Redirect using withRouter (V.5) or useNavigate (V.6)
+        
+    > https://v5.reactrouter.com/web/api/withRouter
+    > https://reactrouter.com/docs/en/v6/faq#what-happened-to-withrouter-i-need-it
+    > In the file [src>views>example>Home.js]
+
+            import React, { useEffect } from "react";
+            import { useNavigate } from "react-router-dom";
+
+            function Home() {
+                let navigate = useNavigate();
+                useEffect(() => {
+                    setTimeout(() => {
+                        navigate("/todo-app");
+                    }, 3000);
+                    setTimeout(() => {
+                        navigate("/home");
+                    }, 6000);
+                });
+                return (
+                    ...
+                );
+            }
+
+            export default Home;
+
+    > **useEffect()**  like **componentDidUpdate()**
+    
+            setTimeout(() => {
+                navigate("/todo-app");
+            }, 3000);
+    
+    > navigate
+        > https://reactnavigation.org/docs/use-navigation/
+        > https://reactnavigation.org/docs/navigation-prop
+    > Meaning after 3 second will display with url "/todo-app", this action is same as when we click Link & NavLink 
+
