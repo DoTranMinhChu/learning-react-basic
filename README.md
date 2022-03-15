@@ -2736,13 +2736,16 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
             function Home() {
                 let navigate = useNavigate();
-
                 useEffect(() => {
                     setTimeout(() => {
+                    console.log("check todo-app");
                     navigate("/todo-app");
                     }, 3000);
                     setTimeout(() => {
-                    navigate("/home");
+                    console.log("check 4500");
+                    }, 4500);
+                    setTimeout(() => {
+                    console.log("check 6000");
                     }, 6000);
                 });
                 return (
@@ -2920,3 +2923,18 @@ _______________________REACT.JS FOR BEGINNERS_______________________
         > https://reactnavigation.org/docs/navigation-prop
     > Meaning after 3 second will display with url "/todo-app", this action is same as when we click Link & NavLink 
 
+             useEffect(() => {
+                setTimeout(() => {
+                console.log("check todo-app");
+                navigate("/todo-app");
+                }, 3000);
+                setTimeout(() => {
+                console.log("check 4500");
+                }, 4500);
+                setTimeout(() => {
+                console.log("check 6000");
+                }, 6000);
+            });
+
+    > Beside we have setTimeout(()=>{..},4500) and setTimeout(()=>{..},6000)
+        > Although the url has changed to /todo-app, these 2 blocks will still work
