@@ -2669,30 +2669,30 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                             </div> */}
                             {/* Uncomand and try code V.6 */}
                             {/* <div className="topnav">
-                            <NavLink
-                                to="/"
-                                className={({ isActive }) => (isActive ? "active" : "")}
-                            >
-                                Main
-                            </NavLink>
-                            <NavLink
-                                to="/home"
-                                className={({ isActive }) => (isActive ? "active" : "")}
-                            >
-                                Home
-                            </NavLink>
-                            <NavLink
-                                to="todo-app"
-                                className={({ isActive }) => (isActive ? "active" : "")}
-                            >
-                                Todo App
-                            </NavLink>
-                            <NavLink
-                                to="about"
-                                className={({ isActive }) => (isActive ? "active" : "")}
-                            >
-                                About
-                            </NavLink>
+                                <NavLink
+                                    to="/"
+                                    className={(navData) => (navData.isActive ? "active" : "")}
+                                >
+                                    Main
+                                </NavLink>
+                                <NavLink
+                                    to="/home"
+                                    className={(navData) => (navData.isActive ? "active" : "")}
+                                >
+                                    Home
+                                </NavLink>
+                                <NavLink
+                                    to="todo-app"
+                                    className={(navData) => (navData.isActive ? "active" : "")}
+                                >
+                                    Todo App
+                                </NavLink>
+                                <NavLink
+                                    to="about"
+                                    className={(navData) => (navData.isActive ? "active" : "")}
+                                >
+                                    About
+                                </NavLink>
                             </div> */}
                         </>
                     );
@@ -2859,37 +2859,37 @@ _______________________REACT.JS FOR BEGINNERS_______________________
     > As of v6.0.0-beta.3, the activeClassName and activeStyle props have been removed from NavLinkProps. Instead, you can pass a function to either style or className that will allow you to customize the inline styling or the class string based on the component's active state.
     > https://reactrouter.com/docs/en/v6/upgrading/v5#remove-activeclassname-and-activestyle-props-from-navlink-
 
-            <div className="topnav">
-                <NavLink
-                    to="/"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    Main
-                </NavLink>
-                <NavLink
-                    to="/home"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    Home
-                </NavLink>
-                <NavLink
-                    to="todo-app"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    Todo App
-                </NavLink>
-                <NavLink
-                    to="about"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                    About
-                </NavLink>
-            </div>
+                <div className="topnav">
+                    <NavLink
+                        to="/"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Main
+                    </NavLink>
+                    <NavLink
+                        to="/home"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink
+                        to="todo-app"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Todo App
+                    </NavLink>
+                    <NavLink
+                        to="about"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        About
+                    </NavLink>
+                </div>
     
     * Redirect using withRouter (V.5) or useNavigate (V.6)
-        
     > https://v5.reactrouter.com/web/api/withRouter
     > https://reactrouter.com/docs/en/v6/faq#what-happened-to-withrouter-i-need-it
+    > https://reactrouter.com/docs/en/v6/getting-started/overview#navigation
     > In the file [src>views>example>Home.js]
 
             import React, { useEffect } from "react";
@@ -2938,3 +2938,5 @@ _______________________REACT.JS FOR BEGINNERS_______________________
 
     > Beside we have setTimeout(()=>{..},4500) and setTimeout(()=>{..},6000)
         > Although the url has changed to /todo-app, these 2 blocks will still work
+
+

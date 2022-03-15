@@ -24,25 +24,25 @@ class Navigation extends React.Component {
         {/* <div className="topnav">
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? "active" : "")}
+            className={(navData) => (navData.isActive ? "active" : "")}
           >
             Main
           </NavLink>
           <NavLink
             to="/home"
-            className={({ isActive }) => (isActive ? "active" : "")}
+            className={(navData) => (navData.isActive ? "active" : "")}
           >
             Home
           </NavLink>
           <NavLink
             to="todo-app"
-            className={({ isActive }) => (isActive ? "active" : "")}
+            className={(navData) => (navData.isActive ? "active" : "")}
           >
             Todo App
           </NavLink>
           <NavLink
             to="about"
-            className={({ isActive }) => (isActive ? "active" : "")}
+            className={(navData) => (navData.isActive ? "active" : "")}
           >
             About
           </NavLink>
