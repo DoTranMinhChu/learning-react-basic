@@ -2919,8 +2919,8 @@ _______________________REACT.JS FOR BEGINNERS_______________________
             }, 3000);
     
     > navigate
-        > https://reactnavigation.org/docs/use-navigation/
-        > https://reactnavigation.org/docs/navigation-prop
+    > https://reactnavigation.org/docs/use-navigation/
+    > https://reactnavigation.org/docs/navigation-prop
     > Meaning after 3 second will display with url "/todo-app", this action is same as when we click Link & NavLink 
 
              useEffect(() => {
@@ -2939,4 +2939,414 @@ _______________________REACT.JS FOR BEGINNERS_______________________
     > Beside we have setTimeout(()=>{..},4500) and setTimeout(()=>{..},6000)
         > Although the url has changed to /todo-app, these 2 blocks will still work
 
+
+
+
+====================================================================
+# XXI. Higher Order Components (https://reactjs.org/docs/higher-order-components.html)
+> A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+>Concretely, a higher-order component is a function that takes a component and returns a new component.
+
+        const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+
+* Now create files and folders as follows:
+
+        └───src
+            │
+            └───views
+                │   ..
+                │   ..
+                │   ..
+                │
+                ├───...
+                │
+                ├───HOC
+                │       ClickCounter.js
+                │       Color.js
+                │       HOC.js
+                │       HoverCounter.js
+                │
+                ├───..
+                │
+                └───..
+    
+* Write code :
+    * Write the following code into the file [src>views>HOC>ClickCounter.js]
+
+
+            import React from "react";
+
+            class ClickCounter extends React.Component {
+                state = {
+                    count: 0,
+                };
+                incrementCount = () => {
+                    this.setState((prevState) => {
+                        console.log(">>>> ClickCounter - PrevState : ", prevState);
+                        console.log(">>>> ClickCounter - this.State : ", this.state);
+                        return { count: prevState.count + 1 };
+                    });
+                };
+                render() {
+                    return (
+                        <div>
+                            <button onClick={() => this.incrementCount()}>
+                            Clicked {this.state.count} times
+                            </button>
+                        </div>
+                    );
+                }
+            }
+
+            export default ClickCounter;
+
+
+    * Write the following code into the file [src>views>HOC>HoverCounter.js]
+
+
+            import React from "react";
+
+            class HoverCounter extends React.Component {
+                state = {
+                    count: 0,
+                };
+                incrementCount = () => {
+                    this.setState((prevState) => {
+                        console.log(">>>> HoverCounter - PrevState : ", prevState);
+                        console.log(">>>> HoverCounter - this.State : ", this.state);
+                        return { count: prevState.count + 1 };
+                    });
+                };
+                render() {
+                    return (
+                        <div>
+                            <button onMouseOver={() => this.incrementCount()}>
+                            Hover {this.state.count} times
+                            </button>
+                        </div>
+                    );
+                }
+            }
+
+            export default HoverCounter;
+
+
+    * Write the following code into the file [src>views>HOC>HOC.js]
+
+            import React from "react";
+            import ClickCounter from "./ClickCounter";
+            import HoverCounter from "./HoverCounter";
+
+            class HOC extends React.Component {
+                render() {
+                    return (
+                        <>
+                            <ClickCounter />
+                            <HoverCounter />
+                        </>
+                    );
+                }
+            }
+
+            export default HOC;
+
+
+    * Add code for &lt;Routes&gt; &lt;/Routes&gt; in file [src>views>App.js]
+
+            ..
+            .
+            ....
+            .
+            <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/todo-app" element={<ListTodo />} />
+                <Route path="/about" element={<MyClassComponent />} />
+                <Route path="/hoc" element={<HOC />} />
+                <Route path="/" element={<div>Main page</div>} />
+            </Routes>
+            ..
+            .
+            ....
+
+    * Add code for file [src>views>Navigation>Navigation.js]
+
+            .
+            .
+            <NavLink
+            to="hoc"
+            className={(navData) => (navData.isActive ? "active" : "")}
+            >
+            HOC
+            </NavLink>
+            .
+            .
+            .
+
+* Run code and open '/hoc'
+    * Try the two button
+    * Now open the two files [src>views>HOC>ClickCounter.js] and [src>views>HOC>HoverCounter.js]
+    * Easy see the two files are almost the same:
+
+            state = {
+                count: 0,
+            };
+            incrementCount = () => {
+                this.setState((prevState) => {
+                    ...
+                    ...
+                    return { count: prevState.count + 1 };
+                });
+            };
+            
+    > Note : 
+
+                this.setState((prevState) => {
+
+                    return { count: prevState.count + 1 };
+                });
+
+        same
+
+                this.setState({
+                    count: this.state.count + 1 };
+                });
+
+
+    * The only difference is envent *onMouseOver* and *onClick*:
+        * File [src>views>HOC>ClickCounter.js]
+
+
+                <button onClick={() => this.incrementCount()}>
+                    Clicked {this.state.count} times
+                </button>
+
+
+        * File [src>views>HOC>HoverCounter.js]
+
+
+                <button onMouseOver={() => this.incrementCount()}>
+                    Hover {this.state.count} times
+                </button>
+
+* The problem is that we haven't reused the code
+> Now we will use HOC(Higher Order Components) to reuse the above code efficenty
+* Rewriting the code follows:
+    * Create new file [src>views>HOC>WithCounter.js]
+    * Now we will convert the following lines(In files [ClickCounter.js] and [HoverCounter.js]):
+
+            state = {
+                count: 0,
+            };
+            incrementCount = () => {
+                this.setState((prevState) => {
+                    ...
+                    ...
+                    return { count: prevState.count + 1 };
+                });
+            };
+    
+    
+     become other code into the file[WithCounter.js]
+
+    * Write the following code into the file [src>views>HOC>WithCounter.js]
+    
+
+            import React from "react";
+
+            const WithCounter = (WrappedCompenent) => {
+                class WitherCounterClass extends React.Component {
+                    constructor(props) {
+                        super(props);
+                        this.state = {
+                            count: 0,
+                        };
+                    }
+
+                    incrementCount = () => {
+                        this.setState((prevState) => {
+                            console.log(">>>> WithCounter - PrevState : ", prevState);
+                            console.log(">>>> WithCounter - this.State : ", this.state);
+                            return { count: prevState.count + 1 };
+                        });
+                    };
+
+                    render() {
+                        return (
+                            <WrappedCompenent
+                            count={this.state.count}
+                            incrementCount={this.incrementCount}
+                            />
+                        );
+                    }
+                }
+                return WithCounter;
+            };
+
+
+            export default WithCounter;
+
+
+    * Change code in file [src>views>HOC>ClickCounter.js] follows:
+    
+            import React from "react";
+            import WithCounter from "./WithCounter";
+
+            class ClickCounter extends React.Component {
+                render() {
+                    const { count, incrementCount } = this.props;
+                    return (
+                        <div>
+                            <button onClick={incrementCount}>Click {count} times</button>
+                        </div>
+                    );
+                }
+            }
+
+            export default WithCounter(ClickCounter);
+
+            
+    * Change code in file [src>views>HOC>ClickCounter.js] follows:
+
+
+            import React from "react";
+            import WithCounter from "./WithCounter";
+
+            class HoverCounter extends React.Component {
+                render() {
+                    const { count, incrementCount } = this.props;
+                    return (
+                        <div>
+                            <button onMouseOver={incrementCount}>Hover {count} times</button>
+                        </div>
+                    );
+                }
+            }
+
+            export default WithCounter(HoverCounter);
+
+    
+    * Run and try code
+
+* Now we will add somethings for the code to make it more performant
+
+    * Change code in file [src>views>HOC>HOC.js] follows:
+
+
+            import React from "react";
+            import ClickCounter from "./ClickCounter";
+            import HoverCounter from "./HoverCounter";
+
+            class HOC extends React.Component {
+                render() {
+                    return (
+                        <>
+                            <ClickCounter name="ClickCounter Button"/>
+                            <HoverCounter name="ClickCounter Button"/>
+                        </>
+                    );
+                }
+            }
+
+            export default HOC;
+
+
+    * Change code in file [src>views>HOC>WithCounter.js] follows:
+
+            import React from "react";
+
+            const WithCounter = (WrappedCompenent, stepCount) => {
+                class WitherCounterClass extends React.Component {
+
+                    constructor(props) {
+                        super(props);
+                        this.state = {
+                            count: 0,
+                        };
+                    }
+
+                    incrementCount = () => {
+                        const { name } = this.props;
+                        this.setState((prevState) => {
+                            console.log(">>>> ", name, " - PrevState : ", prevState);
+                            return { count: prevState.count + stepCount };
+                        });
+                    };
+
+                    render() {
+                        console.log(">>>> ", this.props.name, " - this.props : ", this.props);
+                        return (
+                            <WrappedCompenent
+                            count={this.state.count}
+                            incrementCount={this.incrementCount}
+                            {...this.props}
+                            />
+                        );
+                    }
+                }
+                return WitherCounterClass;
+            };
+
+            export default WithCounter;
+
+
+    * Change code in file [src>views>HOC>ClickCounter.js] follows:
+
+            import React from "react";
+            import WithCounter from "./WithCounter";
+
+            class ClickCounter extends React.Component {
+                render() {
+                    const { count, incrementCount } = this.props;
+                    console.log(">>> ClickCounter.js - this.props: ",this.props);
+                    return (
+                        <div>
+                            <button onClick={incrementCount}>Click {count} times</button>
+                        </div>
+                    );
+                }
+            }
+            const stepCount = 3;
+            export default WithCounter(ClickCounter,stepCount);
+
+
+    * Change code in file [src>views>HOC>HoverCounter.js] follows:
+
+            import React from "react";
+            import WithCounter from "./WithCounter";
+
+            class HoverCounter extends React.Component {
+                render() {
+                    const { count, incrementCount } = this.props;
+                    console.log(">>> HoverCounter.js - this.props: ",this.props);
+                    return (
+                    <div>
+                        <button onMouseOver={incrementCount}>Hover {count} times</button>
+                    </div>
+                    );
+                }
+            }
+            const stepCount = 5;
+            export default WithCounter(HoverCounter, stepCount);
+
+           
+* Explain code :
+    * In file [src>views>HOC>HoverCounter.js] : 
+
+
+            class HoverCounter extends React.Component {
+                ...
+            }
+            ...
+            ..
+            const stepCount = 5;
+            export default WithCounter(HoverCounter, stepCount);
+
+
+        * That mean we pass  **HoverCounter** *Component* and **stepCount** into **WithCounter** *WithCounter* (file [WithCounter.js])
+
+
+                 const WithCounter = (WrappedCompenent, stepCount) => {
+                     ...
+                 }
 
