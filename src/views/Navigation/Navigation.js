@@ -37,6 +37,13 @@ class Navigation extends React.Component {
           >
             HOC
           </NavLink>
+
+          <NavLink
+            to="users"
+            className={(navData) => (navData.isActive ? "active" : "")}
+          >
+            Users
+          </NavLink>
         </div>
       </>
     );

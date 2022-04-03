@@ -3350,3 +3350,207 @@ _______________________REACT.JS FOR BEGINNERS_______________________
                      ...
                  }
 
+
+
+
+====================================================================
+# XXII. Using Axios - Send Request API from ReactJS (https://www.npmjs.com/package/axios)
+> Axios is used to communicate with the backend and it also supports the Promise API that is native to JS ES6.  
+> It is a library which is used to make requests to an API, return data from the API, and then do things with that data in our React application. 
+> Axios is a very popular HTTP client, which allows us to make HTTP  requests from the browser. 
+* Ref API from web https://reqres.in/
+* Install Axios
+
+        npm install axios
+
+        
+* Example code
+    * Now create files and folders as follows:
+
+
+            ├───...
+            └───views
+                │   
+                │
+                ├─── ..
+                │
+                ├───...
+                │
+                ├───..
+                │
+                └───User
+                        ListUser.js
+                        ListUser.scss
+
+
+    * Write the following code into the file [src>views>User>ListUser.js]
+
+
+            import React from "react";
+            import axios from "axios"; //import axios
+            import "./ListUser.scss";
+            class ListUser extends React.Component {
+
+                state = {
+                    ListUser: []
+                }
+
+                //ES7 (using async/await)
+                async componentDidMount() {
+                    let res = await axios.get('https://reqres.in/api/users?page=2');
+                    console.log('>>> Check res: ', res)
+                    console.log('>>> Check res data: ', res.data.data)
+                    this.setState({
+                        ListUser: res && res.data && res.data.data ? res.data.data : []
+                    })
+                }
+
+                // ES6 (using promise)
+                // componentDidMount(){
+                //     axios.get('https://reqres.in/api/users?page=2').then(res=>{
+                //         console.log('>>> Check res: ',res)
+                //         console.log('>>> Check res data: ',res.data.data)
+                //     })
+                // }
+
+
+                render() {
+                    const { ListUser } = this.state;
+                    return (
+                        <>
+
+                            <div className="list-user-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td>NO</td>
+                                            <td>ID</td>
+                                            <td>email</td>
+                                            <td>FullName</td>
+                                            <td>avatar</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            ListUser.map((user, index) => {
+                                                return (
+                                                    <tr key={user.id}>
+                                                        <td>
+                                                            {index}
+                                                        </td>
+                                                        <td>
+                                                            {user.id}
+                                                        </td>
+                                                        <td>
+                                                            {user.email}
+                                                        </td>
+                                                        <td>
+                                                            {user.first_name + " " + user.last_name}
+                                                        </td>
+                                                        <td>
+                                                            <img src={user.avatar} alt="avatar"></img>
+                                                        </td>
+                                                    </tr>
+
+                                                );
+                                            })
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            export default ListUser;
+
+
+    * Write the following code in to the file [src>views>User>ListUser.scss]
+
+            .list-user-container {
+                margin: 20px;
+                display: flex;
+                justify-content: center;
+                td,
+                th {
+                    padding: 5px 10px;
+                    border: 1px solid;
+                }
+                table {
+                    border: 1px solid;
+                    width: 80%;
+                    border-collapse: collapse;
+                }
+            }
+
+    * Add code for &lt;Routes&gt; &lt;/Routes&gt; in file [src>views>App.js]
+
+                ..
+                .
+                ....
+                .
+                <Routes>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/todo-app" element={<ListTodo />} />
+                    <Route path="/about" element={<MyClassComponent />} />
+                    <Route path="/hoc" element={<HOC />} />
+                    <Route path="/users" element={<ListUser />} />
+                    <Route path="/" element={<div>Main page</div>} />
+                </Routes>
+                ..
+                .
+                ....
+
+        * Add code for file [src>views>Navigation>Navigation.js]
+
+                .
+                .
+                <NavLink
+                    to="users"
+                    className={(navData) => (navData.isActive ? "active" : "")}
+                >
+                    Users
+                </NavLink>
+                .
+                .
+                .
+
+
+* Explain code 
+    * Run, view result and console 
+    * In file [src>views>ListUser.js]
+        * 
+                async componentDidMount() {
+                    let res = await axios.get('https://reqres.in/api/users?page=2');
+                    console.log('>>> Check res: ', res)
+                    console.log('>>> Check res data: ', res.data.data)
+                    this.setState({
+                        ListUser: res && res.data && res.data.data ? res.data.data : []
+                    })
+                }
+
+            > This code using async/await (ES7)
+
+                componentDidMount(){
+                    axios.get('https://reqres.in/api/users?page=2').then(res=>{
+                        console.log('>>> Check res: ',res)
+                        console.log('>>> Check res data: ',res.data.data)
+                    })
+                }
+
+            > This code using promise (ES6)
+        > However, they are essentially the same
+
+        * 
+        
+                axios.get('https://reqres.in/api/users?page=2')
+
+        > Read data form web API 'https://reqres.in/api/users?page=2' by method GET
+
+
+      
+
+
+          

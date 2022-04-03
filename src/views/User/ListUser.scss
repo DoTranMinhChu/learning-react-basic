@@ -1,0 +1,15 @@
+.list-user-container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    td,
+    th {
+        padding: 5px 10px;
+        border: 1px solid;
+    }
+    table {
+        border: 1px solid;
+        width: 80%;
+        border-collapse: collapse;
+    }
+}

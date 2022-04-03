@@ -4,6 +4,7 @@ import ListTodo from "./Todos/ListTodo";
 import MyClassComponent from "./example/MyClassComponent";
 import Home from "./example/Home";
 import HOC from "./HOC/HOC";
+import ListUser from "./User/ListUser";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./Navigation/Navigation";
@@ -21,6 +22,7 @@ function App() {
             <Route path="/todo-app" element={<ListTodo />} />
             <Route path="/about" element={<MyClassComponent />} />
             <Route path="/hoc" element={<HOC />} />
+            <Route path="/users" element={<ListUser />} />
             <Route path="/" element={<div>Main page</div>} />
           </Routes>
         </header>
