@@ -1,5 +1,9 @@
 _______________________REACT.JS FOR BEGINNERS_______________________
 
+===================================================================
+# Refernces :
+* componentDidMount,componentDidUpdate,... in Hooks
+https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-react-function-hooks-component
 
 ====================================================================
 
@@ -3488,6 +3492,8 @@ _______________________REACT.JS FOR BEGINNERS_______________________
     * Add code for &lt;Routes&gt; &lt;/Routes&gt; in file [src>views>App.js]
 
                 ..
+                import ListUser from "./User/ListUser";
+                ..
                 .
                 ....
                 .
@@ -3553,4 +3559,14 @@ _______________________REACT.JS FOR BEGINNERS_______________________
       
 
 
-          
+====================================================================
+# XXIII. Route Parameters , using  useParams (v.6)
+> Ref useParams: https://reactrouter.com/docs/en/v6/api#useparams
+> Ref API from web https://reqres.in/
+
+* Try link : 
+    * https://reqres.in/api/users/2
+    * https://reqres.in/api/users/4
+    * https://reqres.in/api/users/3
+    
+
