@@ -3631,7 +3631,14 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
                         this.setState({
                             user: res.data.data
                         })
+
                     }
+                }
+                
+                handleBackButton = () => {
+                    console.log("check")
+                    const navigate = this.props.router.navigate;
+                    navigate('/users');
                 }
 
                 render() {
@@ -3663,11 +3670,12 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
                                                 <img src={user.avatar} alt="avatar"></img>
                                             </td>
                                         </tr>
-
-
                                     </tbody>
                                 </table>
+
+
                             </div>
+                            <button onClick={() => this.handleBackButton()}>Back List Users</button>
                         </>
                     )
 
@@ -3789,7 +3797,7 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
         * We using asnys/await together with aixos to get data detail user form API
 
     
-    * In file [ListUser.js]:
+    * In file [ListUser.js] and [DetailUser.js]:
 
 
             handleViewDetailUser = (user) => {
@@ -3799,5 +3807,13 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
                 navigate(`/users/${user.id}`);
             }
 
+        and 
+
+
+            handleBackButton = () => {
+                console.log("check")
+                const navigate = this.props.router.navigate;
+                navigate('/users');
+            }
         
         * navigate(path) will redirect to path

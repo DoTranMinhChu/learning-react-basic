@@ -19,6 +19,12 @@ class DetailUser extends React.Component {
 
         }
     }
+    
+    handleBackButton = () => {
+        console.log("check")
+        const navigate = this.props.router.navigate;
+        navigate('/users');
+    }
 
     render() {
         const { user } = this.state;
@@ -49,11 +55,12 @@ class DetailUser extends React.Component {
                                     <img src={user.avatar} alt="avatar"></img>
                                 </td>
                             </tr>
-
-
                         </tbody>
                     </table>
+
+
                 </div>
+                <button onClick={() => this.handleBackButton()}>Back List Users</button>
             </>
         )
 
