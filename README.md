@@ -3817,3 +3817,217 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
             }
         
         * navigate(path) will redirect to path
+
+
+
+
+====================================================================
+# XXIX. Importings Images
+* Use the import Statement to Import Images in React
+
+        import Logo from "../src/Reactlogo.jpg";
+        class App extends Component {
+            render() {
+                return <img src={Logo} />
+            }
+        }
+
+
+* Import image to folder [src>assets>images], rename image to "image.jpg"
+
+
+        │
+        └───src
+            │   ...
+            │   ...
+            │
+            ├───assets
+            │   ├───audio
+            │   └───images
+            │           image.jpg
+            │
+            ├───...
+            ├───.....
+
+* Create new folders and files in [src>views]
+
+
+        │
+        └───src
+            │  ..
+            │   ..
+            │
+            │
+            ├───..
+            └───views
+                │   ..
+                │   ...
+                │   ...
+                │
+                ├───DisplayImage
+                │       DisplayImage.js
+                │
+
+
+* Code :
+    * Write the following code into the file [src>views>DisplayImage>DisplayImage.js]
+
+    
+            import React from "react";
+            import mainImage from "../../assets/images/image.jpg";
+
+
+            class DisplayImage extends React.Component {
+                render() {
+                    return (
+                        <>
+                            <div>Display Image</div>
+                            <div>
+                                <img width="500px" src={mainImage} alt="main image" />
+                            </div>
+
+                        </>
+                    )
+                }
+            }
+
+            export default DisplayImage;
+
+
+    * Change code in file [src>views>App.js]
+
+            import logo from "./logo.svg";
+            import "./App.scss";
+            import ListTodo from "./Todos/ListTodo";
+            import MyClassComponent from "./example/MyClassComponent";
+            import Home from "./example/Home";
+            import HOC from "./HOC/HOC";
+            import ListUser from "./User/ListUser";
+            import DetailUser from "./User/DetailUser";
+            import { ToastContainer } from "react-toastify";
+            import "react-toastify/dist/ReactToastify.css";
+            import Navigation from "./Navigation/Navigation";
+            import { BrowserRouter, Routes, Route } from "react-router-dom";
+            import DisplayImage from "./DisplayImage/DisplayImage";
+
+            function App() {
+            return (
+                <BrowserRouter>
+                <div className="App">
+                    <Navigation />
+                    <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <Routes>
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/todo-app" element={<ListTodo />} />
+                        <Route path="/about" element={<MyClassComponent />} />
+                        <Route path="/hoc" element={<HOC />} />
+                        <Route exact path="/users" element={<ListUser />} />
+                        <Route path="/users/:id" element={<DetailUser />}/>
+                        <Route exact path="/display-image" element={<DisplayImage />} />
+                        <Route path="/" element={<div>Main page</div>} />
+                    </Routes>
+                    </header>
+                </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <ToastContainer />
+                </BrowserRouter>
+            );
+            }
+
+            export default App;
+
+
+    * Change code in the file [src>views>Navigation>Navigation.js]
+
+            import React from "react";
+            import "./Navigation.scss";
+            import { NavLink } from "react-router-dom";
+
+            class Navigation extends React.Component {
+            render() {
+                return (
+                <>
+                    <div className="topnav">
+                    <NavLink
+                        to="/"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Main
+                    </NavLink>
+                    <NavLink
+                        to="/home"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink
+                        to="todo-app"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Todo App
+                    </NavLink>
+                    <NavLink
+                        to="about"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        About
+                    </NavLink>
+                    <NavLink
+                        to="hoc"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        HOC
+                    </NavLink>
+
+                    <NavLink
+                        to="users"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Users
+                    </NavLink>
+                    <NavLink
+                        to="display-image"
+                        className={(navData) => (navData.isActive ? "active" : "")}
+                    >
+                        Display Image
+                    </NavLink>
+                    </div>
+                </>
+                );
+            }
+            }
+
+            export default Navigation;
+
+
+
+
+* When run code we will see that the img path is *static/media/image.e3808b4b14bfbb66d6c8.jpg*, while the img path we imported is *assets/images/image.jpg*
+* How Imported Images Work in React
+    * First, know that imports are not handled by React at all – they’re handled by your bundler, which is probably Webpack. (if you’re using Create React App, it is definitely Webpack)
+
+    * Webpack, Rollup, Parcel, and other bundlers all work conceptually the same way: when you import a static file, like an image or a CSS file, the bundler doesn’t literally paste that file in at the import location. Instead, it makes a note that this particular JS file depends on this particular image/CSS file/whatever.
+
+    * Then the bundler will copy the image to the output directory with a generated unique name (like e3808b4b14bfbb66d6c8.jpg) and, behind the scenes, it will replace 
+
+            <img src={mainImage}/> 
+
+    with 
+
+            <img src="e3808b4b14bfbb66d6c8.jpg"/>.
+
+
+    * If the image is especially small, Webpack might even decide to inline it into the JS bundle, as an optimization.
+
+    * This all happens without you having to worry about it.

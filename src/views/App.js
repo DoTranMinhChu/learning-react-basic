@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./Navigation/Navigation";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DisplayImage from "./DisplayImage/DisplayImage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/hoc" element={<HOC />} />
             <Route exact path="/users" element={<ListUser />} />
             <Route path="/users/:id" element={<DetailUser />}/>
+            <Route exact path="/display-image" element={<DisplayImage />} />
             <Route path="/" element={<div>Main page</div>} />
           </Routes>
         </header>

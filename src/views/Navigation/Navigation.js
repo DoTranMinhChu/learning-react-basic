@@ -44,6 +44,12 @@ class Navigation extends React.Component {
           >
             Users
           </NavLink>
+          <NavLink
+            to="display-image"
+            className={(navData) => (navData.isActive ? "active" : "")}
+          >
+            Display Image
+          </NavLink>
         </div>
       </>
     );
