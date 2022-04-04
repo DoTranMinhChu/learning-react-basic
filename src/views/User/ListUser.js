@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import "./ListUser.scss";
+import withRouter from "./withRouter";
 class ListUser extends React.Component {
 
     state = {
         ListUser: []
     }
 
-    //ES7 (using async/await)
     async componentDidMount() {
         let res = await axios.get('https://reqres.in/api/users?page=2');
         console.log('>>> Check res: ', res)
@@ -17,15 +17,14 @@ class ListUser extends React.Component {
         })
     }
 
-    // ES6 (using promise)
-    // componentDidMount(){
-    //     axios.get('https://reqres.in/api/users?page=2').then(res=>{
-    //         console.log('>>> Check res: ',res)
-    //         console.log('>>> Check res data: ',res.data.data)
-    //     })
-    // }
 
-
+    handleViewDetailUser = (user) => {
+        console.log(">> Check props : ", this.props);
+        const navigate = this.props.router.navigate;
+        console.log(">> Check user : ", user);
+        navigate(`/users/${user.id}`);
+    }
+    
     render() {
         const { ListUser } = this.state;
         return (
@@ -46,7 +45,7 @@ class ListUser extends React.Component {
                             {
                                 ListUser.map((user, index) => {
                                     return (
-                                        <tr key={user.id}>
+                                        <tr key={user.id} onClick={() => this.handleViewDetailUser(user)}>
                                             <td>
                                                 {index}
                                             </td>
@@ -67,9 +66,7 @@ class ListUser extends React.Component {
                                     );
                                 })
 
-
                             }
-
 
                         </tbody>
                     </table>
@@ -79,4 +76,4 @@ class ListUser extends React.Component {
     }
 }
 
-export default ListUser;
+export default withRouter(ListUser);

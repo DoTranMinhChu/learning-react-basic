@@ -3560,13 +3560,244 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
 
 
 ====================================================================
-# XXIII. Route Parameters , using  useParams (v.6)
+# XXIII. Route Parameters , using  useParams (v.6), or withRouter (v.5)
 > Ref useParams: https://reactrouter.com/docs/en/v6/api#useparams
 > Ref API from web https://reqres.in/
-
+> Ref withRouter in v.6 : https://reactrouter.com/docs/en/v6/faq#what-happened-to-withrouter-i-need-it
 * Try link : 
     * https://reqres.in/api/users/2
     * https://reqres.in/api/users/4
     * https://reqres.in/api/users/3
-    
 
+* Now we will use HOC instead withRouter (v.5) , because in React Router v6 withRouter is replaced   
+
+* Example code:
+    * Now create files and folders as follows:
+
+
+            ├───...
+            └───views
+                │   
+                │
+                ├─── ..
+                │
+                ├───...
+                │
+                ├───..
+                │
+                └───User
+                        DetailUser.js
+                        withRouter.scss
+
+    * Write the following code into the file [views>User>withRouter.js] (use HOC)
+
+
+            import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+            const withRouter = (Component) => {
+                function ComponentWithRouterProp(props) {
+                    let location = useLocation();
+                    let navigate = useNavigate();
+                    let params = useParams();
+                    return (
+                        <Component {...props} router={{ location, navigate, params }} />
+                    );
+                }
+                return ComponentWithRouterProp;
+            }
+
+            export default withRouter;
+
+
+
+    * Write the following code into the file [views>User>DetailUser.js]
+
+
+            import axios from "axios";
+            import React from "react";
+            import withRouter from "./withRouter";
+
+            class DetailUser extends React.Component {
+                state = {
+                    user: {}
+                }
+
+                async componentDidMount() {
+                    const params = this.props.router.params;
+                    console.log(">> Detail user with id :", params.id);
+                    let res = await axios.get(`https://reqres.in/api/users/${params.id}`);
+                    console.log(">> Check res : ", res);
+                    if (res && res.data && res.data.data) {
+                        this.setState({
+                            user: res.data.data
+                        })
+                    }
+                }
+
+                render() {
+                    const { user } = this.state;
+                    return (
+                        <>
+                            <div className="list-user-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>email</th>
+                                            <th>FullName</th>
+                                            <th>avatar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr >
+                                            <td>
+                                                {user.id}
+                                            </td>
+                                            <td>
+                                                {user.email}
+                                            </td>
+                                            <td>
+                                                {user.first_name + " " + user.last_name}
+                                            </td>
+                                            <td>
+                                                <img src={user.avatar} alt="avatar"></img>
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    )
+
+                }
+            }
+
+            export default withRouter(DetailUser); 
+
+
+    * Change code in file [views>User>ListUser.js] follows :
+
+
+            import React from "react";
+            import axios from "axios";
+            import "./ListUser.scss";
+            import withRouter from "./withRouter";
+            class ListUser extends React.Component {
+
+                state = {
+                    ListUser: []
+                }
+
+                async componentDidMount() {
+                    let res = await axios.get('https://reqres.in/api/users?page=2');
+                    console.log('>>> Check res: ', res)
+                    console.log('>>> Check res data: ', res.data.data)
+                    this.setState({
+                        ListUser: res && res.data && res.data.data ? res.data.data : []
+                    })
+                }
+
+
+                handleViewDetailUser = (user) => {
+                    console.log(">> Check props : ", this.props);
+                    const navigate = this.props.router.navigate;
+                    console.log(">> Check user : ", user);
+                    navigate(`/users/${user.id}`);
+
+                }
+                render() {
+                    const { ListUser } = this.state;
+                    return (
+                        <>
+
+                            <div className="list-user-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ID</th>
+                                            <th>email</th>
+                                            <th>FullName</th>
+                                            <th>avatar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            ListUser.map((user, index) => {
+                                                return (
+                                                    <tr key={user.id} onClick={() => this.handleViewDetailUser(user)}>
+                                                        <td>
+                                                            {index}
+                                                        </td>
+                                                        <td>
+                                                            {user.id}
+                                                        </td>
+                                                        <td>
+                                                            {user.email}
+                                                        </td>
+                                                        <td>
+                                                            {user.first_name + " " + user.last_name}
+                                                        </td>
+                                                        <td>
+                                                            <img src={user.avatar} alt="avatar"></img>
+                                                        </td>
+                                                    </tr>
+
+                                                );
+                                            })
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            export default withRouter(ListUser);
+
+
+* Explain code :
+    * In file [withRouter.js]:
+        * Because in v.6 **withRouter** has been replaced, so we will use HOC to simulate **withRouter**
+
+    * In file [DetailUser.js]:
+
+            async componentDidMount() {
+                const params = this.props.router.params;
+                console.log(">> Detail user with id :", params.id);
+                let res = await axios.get(`https://reqres.in/api/users/${params.id}`);
+                console.log(">> Check res : ", res);
+                if (res && res.data && res.data.data) {
+                    this.setState({
+                        user: res.data.data
+                    })
+                }
+            }
+        
+
+        * **this.props.router** is *{ location, navigate, params }* we passed in HOC withRouter
+
+
+                   <Component {...props} router={{ location, navigate, params }} />
+
+
+        * We using asnys/await together with aixos to get data detail user form API
+
+    
+    * In file [ListUser.js]:
+
+
+            handleViewDetailUser = (user) => {
+                console.log(">> Check props : ", this.props);
+                const navigate = this.props.router.navigate;
+                console.log(">> Check user : ", user);
+                navigate(`/users/${user.id}`);
+            }
+
+        
+        * navigate(path) will redirect to path
