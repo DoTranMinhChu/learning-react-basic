@@ -4031,3 +4031,17 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
     * If the image is especially small, Webpack might even decide to inline it into the JS bundle, as an optimization.
 
     * This all happens without you having to worry about it.
+
+
+====================================================================
+# XXX. Redux
+> ref : https://redux.js.org/tutorials/essentials/part-1-overview-concepts
+> ref : https://redux.js.org/introduction/getting-started
+> ref : https://blog.logrocket.com/why-use-redux-reasons-with-clear-examples-d21bffd5835/
+* What is Redux?
+    * Redux is a pattern and library for managing and updating application state, using events called "actions". It serves as a centralized store for state that needs to be used across your entire application, with rules ensuring that the state can only be updated in a predictable fashion.
+
+====================================================================
+# XXXI. Redux Stores, Actions, Reducers
+> ref : https://redux.js.org/tutorials/essentials/part-5-async-logic
+> View : https://redux.js.org/assets/images/ReduxAsyncDataFlowDiagram-d97ff38a0f4da0f327163170ccc13e80.gif
