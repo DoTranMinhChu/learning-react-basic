@@ -4691,3 +4691,54 @@ https://redux.js.org/usage/configuring-your-store
 
 
 * Run code and testing
+
+
+===================================================================
+# XL . Redux dev tool extension
+
+* Install Extension for chorme 
+    * Link : https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd/related
+* Usage 
+    * Basic store
+       *  For a basic Redux store simply add:
+
+             const store = createStore(
+                reducer, /* preloadedState, */
+            +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            );
+
+* Example :
+    * Change code the file [src>index.js]
+
+            import React from 'react';
+            import ReactDOM from 'react-dom';
+            import App from './views/App';
+            import reportWebVitals from './reportWebVitals';
+            import './styles/global.scss';
+            import { Provider } from 'react-redux'
+            import { createStore } from 'redux'
+            import rootReducer from './store/reducers/rootReducer'
+
+            const reduxStore = createStore(rootReducer,
+                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            );
+
+            ReactDOM.render(
+                <React.StrictMode>
+
+                    <Provider store={reduxStore}>
+                        <App />
+                    </Provider>
+
+                </React.StrictMode>,
+                document.getElementById('root')
+            );
+
+            reportWebVitals();
+    * Note line :
+    
+            const reduxStore = createStore(rootReducer,
+                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            );
+* Run code :
+    * Right click choose **Inspect** then choose Redux and testing
