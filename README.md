@@ -4340,7 +4340,7 @@ https://redux.js.org/usage/configuring-your-store
 
             * Decalare **mapStateToProps** return *List Users* from **state.users** (state's redux) . And export **ReduxUsing** component is wrapped by **connect(mapStateToProps)** HOC
 
-            
+
                     const mapStateToProps = (state) =>{
                         return {
                             dataRedux : state.users
@@ -4348,3 +4348,8 @@ https://redux.js.org/usage/configuring-your-store
                     }
                     export default connect(mapStateToProps)(ReduxUsing)
 
+
+
+
+====================================================================
+# XXXIX. Create and Delete data in Redux

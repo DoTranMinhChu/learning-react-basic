@@ -12,6 +12,7 @@ import Navigation from "./Navigation/Navigation";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DisplayImage from "./DisplayImage/DisplayImage";
 import ReduxUsing from "./ReduxUsing/ReduxUsing";
+import CreateUserRedux from "./ReduxUsing/CreateUserRedux";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/users/:id" element={<DetailUser />}/>
             <Route exact path="/display-image" element={<DisplayImage />} />
             <Route exact path="/redux-using" element={<ReduxUsing />} />
+            <Route exact path="/create-user" element={<CreateUserRedux />} />
             <Route exact path="/" element={<div>Main page</div>} />
           </Routes>
         </header>

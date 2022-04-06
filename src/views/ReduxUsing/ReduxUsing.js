@@ -1,20 +1,20 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 import { connect } from "react-redux";
 
-class ReduxUsing extends React.Component {  
-    state={
-        userList : []
+class ReduxUsing extends React.Component {
+    state = {
+        userList: []
     }
 
-    componentDidMount(){
-        console.log(">>> Check props : ",this.props);
-        this.setState({
-            userList : this.props.dataRedux
-        })
+
+    handleDeleteUser = (user) => {
+        console.log(">>>Check props ", this.props);
+        this.props.deleteUserRedux(user);
     }
 
     render() {
-        const {userList} = this.state;
+        const  userList  =  this.props.dataRedux;
         return (<>
             <h1>Redux Using</h1>
             <>
@@ -25,6 +25,7 @@ class ReduxUsing extends React.Component {
                                 <th>NO</th>
                                 <th>ID</th>
                                 <th>FullName</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +42,11 @@ class ReduxUsing extends React.Component {
                                             <td>
                                                 {user.name}
                                             </td>
-                        
+                                            <td>
+                                                <button onClick={() => this.handleDeleteUser(user)}>
+                                                    Delete
+                                                </button>
+                                            </td>
                                         </tr>
                                     );
                                 })
@@ -55,9 +60,15 @@ class ReduxUsing extends React.Component {
         </>)
     }
 }
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
     return {
-        dataRedux : state.users
+        dataRedux: state.users
     }
 }
-export default connect(mapStateToProps)(ReduxUsing)
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteUserRedux: (userDetele) => dispatch({ type: 'DELETE_USER', payload: userDetele })
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxUsing)

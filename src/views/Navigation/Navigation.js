@@ -56,6 +56,12 @@ class Navigation extends React.Component {
           >
             Redux Using
           </NavLink>
+          <NavLink
+            to="create-user"
+            className={(navData) => (navData.isActive ? "active" : "")}
+          >
+            Creat User Redux
+          </NavLink>
         </div>
       </>
     );
