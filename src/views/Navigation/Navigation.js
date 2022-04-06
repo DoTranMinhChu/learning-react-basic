@@ -50,6 +50,12 @@ class Navigation extends React.Component {
           >
             Display Image
           </NavLink>
+          <NavLink
+            to="redux-using"
+            className={(navData) => (navData.isActive ? "active" : "")}
+          >
+            Redux Using
+          </NavLink>
         </div>
       </>
     );

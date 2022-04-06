@@ -4183,3 +4183,168 @@ https://redux.js.org/usage/configuring-your-store
 
 ====================================================================
 # XXXIII. Mapping State (Redux) to Props (React)
+
+* Create new fildes and foders following : 
+
+
+        │       ....
+        └───src
+            │   ....
+            │
+            ├───....
+            │   └───...
+            │           ....
+            │
+            ├───....
+            └───views
+                │
+                ├───....
+                │      ....
+                │
+                ├───...
+                │       
+                ├───ReduxUsing
+                │       ReduxUsing.js
+
+        
+* Write code :
+    * Write following code into the file [src>views>ReduxUsing>ReduxUsing.js]
+
+
+            import React from "react";
+            import { connect } from "react-redux";
+
+            class ReduxUsing extends React.Component {  
+                state={
+                    userList : []
+                }
+
+                componentDidMount(){
+                    console.log(">>> Check props : ",this.props);
+                    this.setState({
+                        userList : this.props.dataRedux
+                    })
+                }
+
+                render() {
+                    const {userList} = this.state;
+                    return (<>
+                        <h1>Redux Using</h1>
+                        <>
+                            <div className="list-user-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ID</th>
+                                            <th>FullName</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            userList.map((user, index) => {
+                                                return (
+                                                    <tr key={user.id}>
+                                                        <td>
+                                                            {index}
+                                                        </td>
+                                                        <td>
+                                                            {user.id}
+                                                        </td>
+                                                        <td>
+                                                            {user.name}
+                                                        </td>
+                                    
+                                                    </tr>
+                                                );
+                                            })
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    </>)
+                }
+            }
+            const mapStateToProps = (state) =>{
+                return {
+                    dataRedux : state.users
+                }
+            }
+            export default connect(mapStateToProps)(ReduxUsing)
+
+
+    * Add code for &lt;Routes&gt; &lt;/Routes&gt; in file [src>views>App.js]
+
+            ..
+            .
+            ....
+            .
+            <Routes>
+                <Route exact path="/home" element={<Home />} />
+                <Route exact path="/todo-app" element={<ListTodo />} />
+                <Route exact path="/about" element={<MyClassComponent />} />
+                <Route exact path="/hoc" element={<HOC />} />
+                <Route exact path="/users" element={<ListUser />} />
+                <Route path="/users/:id" element={<DetailUser />}/>
+                <Route exact path="/display-image" element={<DisplayImage />} />
+                <Route exact path="/redux-using" element={<ReduxUsing />} />
+                <Route exact path="/" element={<div>Main page</div>} />
+            </Routes>
+            ..
+            .
+            ....
+
+
+        > Note line : 
+
+
+                 <Route exact path="/redux-using" element={<ReduxUsing />} />
+
+
+    * Add code for file [src>views>Navigation>Navigation.js]
+
+            .
+            .
+            <NavLink
+                to="redux-using"
+                className={(navData) => (navData.isActive ? "active" : "")}
+            >
+                Redux Using
+            </NavLink>
+            .
+            .
+            .
+
+
+* Run code, view screen and console
+
+* Explain code :
+    * In the file [src>views>ReduxUsing>ReduxUsing.js]
+
+        * Import **connect()** to connects a React component to a Redux store.
+
+
+                import { connect } from "react-redux";
+            
+
+            * **connect()** (ref https://react-redux.js.org/api/connect)
+
+                    function connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
+
+
+        * mapStateToProps?: (state, ownProps?) => Object​ 
+            * If your mapStateToProps function is declared as taking one parameter, it will be called whenever the store state changes, and given the store state as the only parameter.
+
+            * Decalare **mapStateToProps** return *List Users* from **state.users** (state's redux) . And export **ReduxUsing** component is wrapped by **connect(mapStateToProps)** HOC
+
+            
+                    const mapStateToProps = (state) =>{
+                        return {
+                            dataRedux : state.users
+                        }
+                    }
+                    export default connect(mapStateToProps)(ReduxUsing)
+
