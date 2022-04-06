@@ -8,7 +8,7 @@ class DisplayImage extends React.Component {
             <>
                 <div>Display Image</div>
                 <div>
-                    <img width="500px" src={mainImage} alt="main image" />
+                    <img width="500px" src={mainImage} alt="mainImage" />
                 </div>
 
             </>

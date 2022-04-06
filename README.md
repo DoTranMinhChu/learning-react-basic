@@ -4033,6 +4033,8 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
     * This all happens without you having to worry about it.
 
 
+
+
 ====================================================================
 # XXX. Redux
 > ref : https://redux.js.org/tutorials/essentials/part-1-overview-concepts
@@ -4041,7 +4043,143 @@ https://stackoverflow.com/questions/53945763/componentdidmount-equivalent-on-a-r
 * What is Redux?
     * Redux is a pattern and library for managing and updating application state, using events called "actions". It serves as a centralized store for state that needs to be used across your entire application, with rules ensuring that the state can only be updated in a predictable fashion.
 
+
+
+
 ====================================================================
 # XXXI. Redux Stores, Actions, Reducers
 > ref : https://redux.js.org/tutorials/essentials/part-5-async-logic
 > View : https://redux.js.org/assets/images/ReduxAsyncDataFlowDiagram-d97ff38a0f4da0f327163170ccc13e80.gif
+
+
+====================================================================
+# XXXII. Setup Redux to propject React
+
+
+* Install redux (https://www.npmjs.com/package/redux) (v: 4.1.2 )
+
+* Install react-redux (https://www.npmjs.com/package/react-redux) (v: 7.2.8)
+
+        npm install --save redux react-redux
+
+
+https://redux.js.org/usage/configuring-your-store
+
+
+* Create files and folder following :
+
+
+        │
+        └───src
+            │   ....
+            │   ....
+            │
+            ├───...
+            │   └───..
+            │           ..
+            │
+            ├───..
+            ├───...
+            ├───store
+            │   ├───actions
+            │   └───reducers
+            │           rootReducer.js
+            │
+            ├───...
+            │       ...
+            ....
+
+
+* Write code :
+    * Write the following code into the file [src>reducers>rootReducer.js]
+
+            const initState = {
+                users: [
+                    { id: 1, name: 'MinhChu' },
+                    { id: 2, name: 'Chu' }
+                ]
+            }
+
+            const rootReducer = (state = initState, action) => {
+                return state;
+            }
+
+            export default rootReducer
+
+
+    * Change code in the file [src>index.js] following : 
+
+
+            import React from 'react';
+            import ReactDOM from 'react-dom';
+            import App from './views/App';
+            import reportWebVitals from './reportWebVitals';
+            import './styles/global.scss';
+            import { Provider } from 'react-redux'
+            import { createStore } from 'redux'
+            import rootReducer from './store/reducers/rootReducer'
+
+            const reduxStore = createStore(rootReducer);
+            ReactDOM.render(
+            <React.StrictMode>
+                <Provider store={reduxStore}>
+                <App />
+                </Provider>
+
+            </React.StrictMode>,
+            document.getElementById('root')
+            );
+
+            reportWebVitals();
+
+
+
+* Explain code : 
+    * In the file [src>reducers>rootReducer.js] :
+    > In Redux, a reducer is a pure function that takes an action and the previous state of the application and returns the new state. The action describes what happened and it is the reducer's job to return the new state based on that action.
+
+
+             const rootReducer = (state = initState, action) => {
+                return state;
+            }
+    
+
+    > Note : **state** is state's Redux
+
+    * In the file [src>index.js]          
+        * To import **Provider** , **createStore** , and reducer
+            * **Provider** component makes the Redux store available to any nested components that need to access the Redux store.
+            > ref : https://react-redux.js.org/api/provider
+            *  **createStore** to creates a Redux store that holds the complete state tree of your app. There should only be a single store in your app
+            > ref : https://redux.js.org/api/createstore
+
+
+                    createStore(reducer, [preloadedState], [enhancer])          
+
+
+            * Code import : 
+
+                    import { Provider } from 'react-redux'
+                    import { createStore } from 'redux'
+                    import rootReducer from './store/reducers/rootReducer'
+        
+        * Create a Redux Store from producer wrote (rootReducer)
+
+
+                const reduxStore = createStore(rootReducer);
+
+        * Wrap **Provider** component outside the **App** compenent to using Redux
+
+
+                <Provider store={reduxStore}>
+                    <App />
+                </Provider>
+
+
+            * store={reduxStore} is using Redux store (rootReducer) to Provider
+
+
+
+
+====================================================================
+# XXXIII. Mapping State (Redux) to Props (React)
