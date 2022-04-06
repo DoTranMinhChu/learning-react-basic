@@ -4353,3 +4353,341 @@ https://redux.js.org/usage/configuring-your-store
 
 ====================================================================
 # XXXIX. Create and Delete data in Redux
+
+
+* Create new fildes and foders following : 
+
+
+        │       ....
+        └───src
+            │   ....
+            │
+            ├───....
+            │   └───...
+            │           ....
+            │
+            ├───....
+            └───views
+                │
+                ├───....
+                │      ....
+                │
+                ├───...
+                │       
+                ├───ReduxUsing
+                |       CreateUserRedux.js
+                │       ...
+
+
+
+* Write code :
+    * Change code in the file [src>views>ReduxUsing>ReduxUsing.js] follows :
+
+
+            import React from "react";
+            import { connect } from "react-redux";
+
+            class ReduxUsing extends React.Component {
+                state = {
+                    userList: []
+                }
+
+
+                handleDeleteUser = (user) => {
+                    console.log(">>>Check props ", this.props);
+                    this.props.deleteUserRedux(user);
+                }
+
+                render() {
+                    const  userList  =  this.props.dataRedux;
+                    return (<>
+                        <h1>Redux Using</h1>
+                        <>
+                            <div className="list-user-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ID</th>
+                                            <th>FullName</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            userList.map((user, index) => {
+                                                return (
+                                                    <tr key={user.id}>
+                                                        <td>
+                                                            {index}
+                                                        </td>
+                                                        <td>
+                                                            {user.id}
+                                                        </td>
+                                                        <td>
+                                                            {user.name}
+                                                        </td>
+                                                        <td>
+                                                            <button onClick={() => this.handleDeleteUser(user)}>
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </>
+                    </>)
+                }
+            }
+            const mapStateToProps = (state) => {
+                return {
+                    dataRedux: state.users
+                }
+            }
+
+            const mapDispatchToProps = (dispatch) => {
+                return {
+                    deleteUserRedux: (userDetele) => dispatch({ type: 'DELETE_USER', payload: userDetele })
+                }
+            }
+            export default connect(mapStateToProps, mapDispatchToProps)(ReduxUsing)
+
+
+    * Write following code into the file [src>views>ReduxUsing>CreateUserRedux.js]
+
+
+            import React from "react";
+            import { connect } from "react-redux";
+            import { toast } from "react-toastify";
+            class CreateUserRedux extends React.Component {
+                state = {
+                    name: "",
+
+                };
+
+                getRandomInt(min, max) {
+                    min = Math.ceil(min);
+                    max = Math.floor(max);
+                    return Math.floor(Math.random() * (max - min) + min);
+                }
+
+                handleAdd = (event) => {
+                    event.preventDefault();
+                    console.log(">> Check props : ", this.props);
+                    if (!this.state.name) {
+                        toast.error(`Missing name's user!`);
+                        return;
+                    }
+                    let newId = "user" + this.getRandomInt(0, 1000);
+                    let newName = this.state.name;
+                    this.props.CreateUserRedux({
+                        id: newId,
+                        name: newName
+                    })
+                    this.setState({
+                        name: "",
+                    });
+                    toast.success(`Successful create new user!`);
+
+                };
+
+                handleChangeNewName = (event) => {
+                    this.setState({
+                        name: event.target.value,
+                    });
+                };
+
+                render() {
+                    return (
+                        <>
+                            <div className="add-todo">
+                                <input
+                                    type="text"
+                                    value={this.state.name}
+                                    onChange={(event) => {
+                                        this.handleChangeNewName(event);
+                                    }}
+                                />
+                                <button
+                                    className="btn"
+                                    onClick={(event) => {
+                                        this.handleAdd(event);
+                                    }}
+                                >
+                                    Create
+                                </button>
+                            </div>
+                        </>
+                    );
+                }
+            }
+
+            const mapStateToProps = (state) => {
+                return {
+                    dataRedux: state.users
+                }
+            }
+
+            const mapDispatchToProps = (dispatch) => {
+                return {
+                    CreateUserRedux: (newUser) => dispatch({ type: 'CREATE_USER', payload: newUser })
+                }
+            }
+
+            export default connect(mapStateToProps, mapDispatchToProps)(CreateUserRedux) 
+
+    * Change code in the file [src>reducers>rootReducer.js] follows:
+
+
+            const initState = {
+                users: [
+                    { id: 1, name: 'user 001' },
+                    { id: 2, name: 'user 002' }
+                ],
+                admin: [
+                    { id: 1, name: 'MinhChu' }
+                ]
+            }
+
+            const rootReducer = (state = initState, action) => {
+                console.log(">> Check action :", action)
+                let users = state.users;
+                switch (action.type) {
+                    case 'DELETE_USER':
+                        users = users.filter((user) => user.id !== action.payload.id)
+                        return {
+                            ...state, users
+                        };
+                    case 'CREATE_USER':
+                        users = [...users, action.payload];
+                        return {
+                            ...state, users
+                        };
+
+                    default:
+                        return state;
+                }
+
+            }
+
+            export default rootReducer
+
+
+    * Add code for &lt;Routes&gt; &lt;/Routes&gt; in file [src>views>App.js]
+
+            ..
+            .
+            ....
+            .
+            <Routes>
+                <Route exact path="/home" element={<Home />} />
+                <Route exact path="/todo-app" element={<ListTodo />} />
+                <Route exact path="/about" element={<MyClassComponent />} />
+                <Route exact path="/hoc" element={<HOC />} />
+                <Route exact path="/users" element={<ListUser />} />
+                <Route path="/users/:id" element={<DetailUser />}/>
+                <Route exact path="/display-image" element={<DisplayImage />} />
+                <Route exact path="/redux-using" element={<ReduxUsing />} />
+                <Route exact path="/" element={<div>Main page</div>} />
+                <Route exact path="/create-user" element={<CreateUserRedux />} />
+            </Routes>
+            ..
+            .
+            ....
+
+
+        > Note line : 
+
+
+                 <Route exact path="/redux-using" element={<ReduxUsing />} />
+
+
+    * Add code for file [src>views>Navigation>Navigation.js]
+
+            .
+            <NavLink
+                to="create-user"
+                className={(navData) => (navData.isActive ? "active" : "")}
+            >
+                Creat User Redux
+            </NavLink>
+            .
+            .
+            .
+
+
+
+* Explain code :
+    * In the file [src>views>ReduxUsing>ReduxUsing.js] :
+
+            const mapStateToProps = (state) => {
+                return {
+                    dataRedux: state.users
+                }
+            }
+
+            const mapDispatchToProps = (dispatch) => {
+                return {
+                    deleteUserRedux: (userDetele) => dispatch({ type: 'DELETE_USER', payload: userDetele })
+                }
+            }
+            export default connect(mapStateToProps, mapDispatchToProps)(ReduxUsing)
+
+        * mapStateToProps (https://react-redux.js.org/using-react-redux/connect-mapstate)
+        * mapDispatchToProps (https://react-redux.js.org/using-react-redux/connect-mapdispatch)
+
+
+                const mapDispatchToProps = (dispatch) => {
+                    return {
+                        deleteUserRedux: (userDetele) => dispatch({ type: 'DELETE_USER', payload: userDetele })
+                    }
+                }
+
+
+            * An *action* is a plain JavaScript object that has a **type** field. *You can think of an action as an event that describes something that happened in the application.*
+            * An *action* object can have other fields with additional information about what happened. By convention, we put that information in a field called **payload**.
+            * ref *action*  : https://redux.js.org/tutorials/fundamentals/part-2-concepts-data-flow#actions
+        * Call function and pass data to *reducer* to handling
+
+                handleDeleteUser = (user) => {
+                    console.log(">>>Check props ", this.props);
+                    this.props.deleteUserRedux(user);
+                }
+
+            * this.props.deleteUserRedux(..) is function declare in 
+
+
+                     const mapDispatchToProps = (dispatch) => {
+                        return {
+                            deleteUserRedux: (userDetele) => dispatch({ type: 'DELETE_USER', payload: userDetele })
+                        }
+                    }
+
+     * In the file [src>reducers>rootReducer.js] :
+        * Remove user from users (state.users)
+
+
+                case 'DELETE_USER':
+                    users = users.filter((user) => user.id !== action.payload.id)
+                    return {
+                        ...state, users
+                    };
+            
+
+        * Adding user into user (state.users)
+
+
+                case 'CREATE_USER':
+                    users = [...users, action.payload];
+                    return {
+                        ...state, users
+                    };
+
+
+* Run code and testing
